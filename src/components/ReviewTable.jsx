@@ -47,7 +47,7 @@ function ExpandedRow({ review }) {
 
   return (
     <tr className="expanded-row">
-      <td colSpan="13">
+      <td colSpan="14">
         <div className="timeline-container">
           <h4>Prep Timeline for {review.retailer}</h4>
           <div className="timeline">
@@ -148,6 +148,7 @@ export default function ReviewTable({ reviews, onToggleComplete, showPast }) {
             <th>Assets Ready</th>
             <th>Final Review</th>
             <th>Review Type</th>
+            <th>Notes</th>
             <th>Complete</th>
           </tr>
         </thead>
@@ -155,7 +156,7 @@ export default function ReviewTable({ reviews, onToggleComplete, showPast }) {
           {sortedReviews.map(review => (
             <Fragment key={review.id}>
               <tr
-                className={`${review.completed ? 'completed-row' : ''} ${expandedId === review.id ? 'expanded' : ''}`}
+                className={`${review.completed ? 'completed-row' : ''} ${expandedId === review.id ? 'expanded' : ''} ${review.needsVerification ? 'needs-verify' : ''}`}
               >
                 <td className="expand-cell" onClick={() => setExpandedId(expandedId === review.id ? null : review.id)}>
                   <ChevronRight size={18} className={expandedId === review.id ? 'rotated' : ''} />
@@ -175,6 +176,9 @@ export default function ReviewTable({ reviews, onToggleComplete, showPast }) {
                 <td>{formatShortDate(review.milestones.assetsReady)}</td>
                 <td>{formatShortDate(review.milestones.finalReview)}</td>
                 <td>{review.reviewType}</td>
+                <td className="notes-cell">
+                  {review.notes && <span className="verify-badge">{review.notes}</span>}
+                </td>
                 <td>
                   <button
                     className={`complete-btn ${review.completed ? 'completed' : ''}`}

@@ -15,20 +15,30 @@ function App() {
   const [statusFilter, setStatusFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [showPast, setShowPast] = useState(false); // Default: only show future reviews
+  const [showAllCategories, setShowAllCategories] = useState(false); // Default: only show relevant categories
 
-  // Get unique retailers for filter dropdown (from future reviews only, unless showPast)
+  // Get unique retailers for filter dropdown (from filtered reviews)
   const retailers = useMemo(() => {
-    const reviewsToUse = showPast
-      ? reviews
-      : reviews.filter(r => isFutureReview(r.submissionDeadline));
+    const reviewsToUse = reviews.filter(r => {
+      // Apply category filter
+      if (!showAllCategories && !r.categoryIncluded) return false;
+      // Apply time filter
+      if (!showPast && !isFutureReview(r.submissionDeadline)) return false;
+      return true;
+    });
     const unique = [...new Set(reviewsToUse.map(r => r.retailer))];
     return unique.sort();
-  }, [reviews, showPast]);
+  }, [reviews, showPast, showAllCategories]);
 
-  // Filter reviews
+  // Filter reviews - apply category filter FIRST, then other filters
   const filteredReviews = useMemo(() => {
     return reviews.filter(review => {
-      // FIRST: Filter to future reviews only (unless showPast is enabled)
+      // FIRST: Category filter (unless showAllCategories is enabled)
+      if (!showAllCategories && !review.categoryIncluded) {
+        return false;
+      }
+
+      // SECOND: Filter to future reviews only (unless showPast is enabled)
       if (!showPast && !isFutureReview(review.submissionDeadline)) {
         return false;
       }
@@ -58,7 +68,16 @@ function App() {
 
       return true;
     });
-  }, [reviews, brandFilter, retailerFilter, statusFilter, searchQuery, showPast]);
+  }, [reviews, brandFilter, retailerFilter, statusFilter, searchQuery, showPast, showAllCategories]);
+
+  // Get base filtered reviews for summary cards and alerts (category + time filtered)
+  const baseFilteredReviews = useMemo(() => {
+    return reviews.filter(review => {
+      if (!showAllCategories && !review.categoryIncluded) return false;
+      if (!showPast && !isFutureReview(review.submissionDeadline)) return false;
+      return true;
+    });
+  }, [reviews, showPast, showAllCategories]);
 
   const handleToggleComplete = (id) => {
     setReviews(reviews.map(r =>
@@ -72,6 +91,10 @@ function App() {
     month: 'long',
     day: 'numeric'
   });
+
+  // Count stats for header
+  const relevantCount = reviews.filter(r => r.categoryIncluded).length;
+  const totalCount = reviews.length;
 
   return (
     <div className="app">
@@ -88,13 +111,18 @@ function App() {
             <Calendar size={18} />
             <span>{formattedDate}</span>
           </div>
+          {!showAllCategories && (
+            <div className="filter-indicator">
+              Showing {relevantCount} of {totalCount} categories
+            </div>
+          )}
         </div>
       </header>
 
       <main className="main-content">
         <div className="top-section">
-          <SummaryCards reviews={reviews} showPast={showPast} />
-          <AlertPanel reviews={reviews} showPast={showPast} />
+          <SummaryCards reviews={baseFilteredReviews} showPast={showPast} />
+          <AlertPanel reviews={baseFilteredReviews} showPast={showPast} />
         </div>
 
         <FilterBar
@@ -109,6 +137,8 @@ function App() {
           retailers={retailers}
           showPast={showPast}
           setShowPast={setShowPast}
+          showAllCategories={showAllCategories}
+          setShowAllCategories={setShowAllCategories}
         />
 
         <ReviewTable
@@ -119,7 +149,7 @@ function App() {
       </main>
 
       <footer className="footer">
-        <p>Petra Brands Sales Operations Dashboard</p>
+        <p>Petra Brands Sales Operations Dashboard — Seasonal Party & Craft Categories</p>
       </footer>
     </div>
   );

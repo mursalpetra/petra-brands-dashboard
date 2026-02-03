@@ -1,4 +1,4 @@
-import { Search, History } from 'lucide-react';
+import { Search, History, Layers } from 'lucide-react';
 
 export default function FilterBar({
   brandFilter,
@@ -11,7 +11,9 @@ export default function FilterBar({
   setSearchQuery,
   retailers,
   showPast,
-  setShowPast
+  setShowPast,
+  showAllCategories,
+  setShowAllCategories
 }) {
   return (
     <div className="filter-bar">
@@ -59,15 +61,33 @@ export default function FilterBar({
           </select>
         </div>
 
+        <div className="toggle-divider" />
+
+        <div className="filter-group toggle-group">
+          <label className="toggle-label">
+            <Layers size={14} />
+            <span>All Categories</span>
+          </label>
+          <button
+            className={`toggle-switch ${showAllCategories ? 'active' : ''}`}
+            onClick={() => setShowAllCategories(!showAllCategories)}
+            aria-label="Toggle all categories"
+            title={showAllCategories ? "Showing all categories" : "Showing only Party & Craft categories"}
+          >
+            <span className="toggle-knob" />
+          </button>
+        </div>
+
         <div className="filter-group toggle-group">
           <label className="toggle-label">
             <History size={14} />
-            <span>Include Past</span>
+            <span>Past Reviews</span>
           </label>
           <button
             className={`toggle-switch ${showPast ? 'active' : ''}`}
             onClick={() => setShowPast(!showPast)}
             aria-label="Toggle past reviews"
+            title={showPast ? "Showing past reviews" : "Showing future reviews only"}
           >
             <span className="toggle-knob" />
           </button>

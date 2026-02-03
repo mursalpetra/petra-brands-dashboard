@@ -1,5 +1,7 @@
 // Category Review Data from HarvestHub
-// Auto-assigned brands based on category keywords
+// Processed with category filtering for Petra Brands (House of Party + Craft Hero)
+
+import { categorizeReview } from '../utils/categoryUtils';
 
 const rawData = [
   { retailer: "Food City HQ", categories: "Office/School Supplies, Cards, Stationery and Gift", deadline: "2026-07-17", reviewType: "Minor" },
@@ -101,43 +103,25 @@ const rawData = [
   { retailer: "Harmons HQ", categories: "Misc. Outdoors, Misc. Household", deadline: "2025-01-02", reviewType: "Major" },
 ];
 
-// Keywords for brand assignment
-const partyKeywords = ['party', 'balloon', 'celebration', 'seasonal', 'gift', 'card', 'stationery', 'floral', 'candy', 'holiday'];
-const craftKeywords = ['craft', 'art', 'hobby', 'diy', 'kid', 'school', 'office', 'supplies'];
-
-function assignBrand(categories) {
-  const lowerCat = categories.toLowerCase();
-
-  // Check for party-related keywords
-  const isParty = partyKeywords.some(kw => lowerCat.includes(kw));
-  const isCraft = craftKeywords.some(kw => lowerCat.includes(kw));
-
-  if (isParty && !isCraft) return 'House of Party';
-  if (isCraft && !isParty) return 'Craft Hero';
-  if (isParty && isCraft) return 'Both';
-
-  // Default assignment based on category patterns
-  if (lowerCat.includes('outdoor') || lowerCat.includes('general merchandise')) {
-    return 'House of Party';
-  }
-  return 'House of Party'; // Default
-}
-
-// Process and enhance the data
+// Process and enhance the data with category filtering
 let idCounter = 1;
 export const reviewData = rawData.map(item => {
-  const brand = assignBrand(item.categories);
+  const catResult = categorizeReview(item.categories);
+
   return {
     id: idCounter++,
-    brand,
+    brand: catResult.brand || 'House of Party',
     retailer: item.retailer,
     category: item.categories,
     submissionDeadline: item.deadline,
     reviewType: item.reviewType || 'Standard',
     lineReviewDate: null,
     resetDate: null,
-    notes: '',
-    completed: false
+    notes: catResult.needsVerification ? '⚠️ Verify category' : '',
+    completed: false,
+    // Category filtering metadata
+    categoryIncluded: catResult.included,
+    needsVerification: catResult.needsVerification
   };
 });
 
