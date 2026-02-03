@@ -1,0 +1,160 @@
+{
+  "generated": "2026-02-03T10:37:11.971Z",
+  "count": 7,
+  "alerts": [
+    {
+      "id": 18,
+      "brand": "House of Party",
+      "retailer": "Raley's HQ",
+      "category": "Misc. Outdoors",
+      "submissionDeadline": "2026-02-06",
+      "reviewType": "Reset",
+      "daysRemaining": 4,
+      "milestones": {
+        "prepStart": "2025-12-12",
+        "internalBriefDue": "2025-12-26",
+        "samplesReady": "2026-01-09",
+        "assetsReady": "2026-01-16",
+        "finalReview": "2026-01-30",
+        "submissionDeadline": "2026-02-06"
+      },
+      "status": "URGENT",
+      "nextMilestone": "Submission Deadline",
+      "nextMilestoneDate": "2026-02-06",
+      "daysUntilMilestone": 3,
+      "urgency": "HIGH"
+    },
+    {
+      "id": 14,
+      "brand": "Both",
+      "retailer": "Publix Super Markets HQ",
+      "category": "Office/School Supplies, Cards, Stationery and Gift",
+      "submissionDeadline": "2026-02-13",
+      "reviewType": "Major",
+      "daysRemaining": 11,
+      "milestones": {
+        "prepStart": "2025-12-19",
+        "internalBriefDue": "2026-01-02",
+        "samplesReady": "2026-01-16",
+        "assetsReady": "2026-01-23",
+        "finalReview": "2026-02-06",
+        "submissionDeadline": "2026-02-13"
+      },
+      "status": "URGENT",
+      "nextMilestone": "Final Review",
+      "nextMilestoneDate": "2026-02-06",
+      "daysUntilMilestone": 3,
+      "urgency": "HIGH"
+    },
+    {
+      "id": 15,
+      "brand": "House of Party",
+      "retailer": "Mother's Market HQ",
+      "category": "House & Kitchenware, Misc. Household, Misc. Outdoors",
+      "submissionDeadline": "2026-02-13",
+      "reviewType": "Full Review",
+      "daysRemaining": 11,
+      "milestones": {
+        "prepStart": "2025-12-19",
+        "internalBriefDue": "2026-01-02",
+        "samplesReady": "2026-01-16",
+        "assetsReady": "2026-01-23",
+        "finalReview": "2026-02-06",
+        "submissionDeadline": "2026-02-13"
+      },
+      "status": "URGENT",
+      "nextMilestone": "Final Review",
+      "nextMilestoneDate": "2026-02-06",
+      "daysUntilMilestone": 3,
+      "urgency": "HIGH"
+    },
+    {
+      "id": 16,
+      "brand": "Both",
+      "retailer": "Food City HQ",
+      "category": "Office/School Supplies, Cards, Stationery and Gift",
+      "submissionDeadline": "2026-02-13",
+      "reviewType": "Major",
+      "daysRemaining": 11,
+      "milestones": {
+        "prepStart": "2025-12-19",
+        "internalBriefDue": "2026-01-02",
+        "samplesReady": "2026-01-16",
+        "assetsReady": "2026-01-23",
+        "finalReview": "2026-02-06",
+        "submissionDeadline": "2026-02-13"
+      },
+      "status": "URGENT",
+      "nextMilestone": "Final Review",
+      "nextMilestoneDate": "2026-02-06",
+      "daysUntilMilestone": 3,
+      "urgency": "HIGH"
+    },
+    {
+      "id": 17,
+      "brand": "House of Party",
+      "retailer": "Food City HQ",
+      "category": "Misc. Outdoors",
+      "submissionDeadline": "2026-02-13",
+      "reviewType": "Minor",
+      "daysRemaining": 11,
+      "milestones": {
+        "prepStart": "2025-12-19",
+        "internalBriefDue": "2026-01-02",
+        "samplesReady": "2026-01-16",
+        "assetsReady": "2026-01-23",
+        "finalReview": "2026-02-06",
+        "submissionDeadline": "2026-02-13"
+      },
+      "status": "URGENT",
+      "nextMilestone": "Final Review",
+      "nextMilestoneDate": "2026-02-06",
+      "daysUntilMilestone": 3,
+      "urgency": "HIGH"
+    },
+    {
+      "id": 13,
+      "brand": "House of Party",
+      "retailer": "Raley's HQ",
+      "category": "Misc. Outdoors",
+      "submissionDeadline": "2026-02-20",
+      "reviewType": "Refresh",
+      "daysRemaining": 18,
+      "milestones": {
+        "prepStart": "2025-12-26",
+        "internalBriefDue": "2026-01-09",
+        "samplesReady": "2026-01-23",
+        "assetsReady": "2026-01-30",
+        "finalReview": "2026-02-13",
+        "submissionDeadline": "2026-02-20"
+      },
+      "status": "PREP_NOW",
+      "nextMilestone": "Final Review",
+      "nextMilestoneDate": "2026-02-13",
+      "daysUntilMilestone": 10,
+      "urgency": "LOW"
+    },
+    {
+      "id": 12,
+      "brand": "House of Party",
+      "retailer": "Kroger: Harris Teeter HQ",
+      "category": "Misc. Outdoors, Household Hardware",
+      "submissionDeadline": "2026-02-25",
+      "reviewType": "Standard",
+      "daysRemaining": 23,
+      "milestones": {
+        "prepStart": "2025-12-31",
+        "internalBriefDue": "2026-01-14",
+        "samplesReady": "2026-01-28",
+        "assetsReady": "2026-02-04",
+        "finalReview": "2026-02-18",
+        "submissionDeadline": "2026-02-25"
+      },
+      "status": "PREP_NOW",
+      "nextMilestone": "Assets Ready",
+      "nextMilestoneDate": "2026-02-04",
+      "daysUntilMilestone": 1,
+      "urgency": "HIGH"
+    }
+  ]
+}
