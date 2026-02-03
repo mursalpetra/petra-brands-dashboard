@@ -1,17 +1,30 @@
 import { AlertCircle, PartyPopper, Palette } from 'lucide-react';
-import { getDaysRemaining, getNextMilestone, formatShortDate } from '../utils/dateUtils';
+import { getDaysRemaining, getClosestMilestone, formatShortDate, isFutureReview } from '../utils/dateUtils';
 
-export default function AlertPanel({ reviews }) {
+export default function AlertPanel({ reviews, showPast }) {
   const activeReviews = reviews.filter(r => !r.completed);
 
-  const urgentItems = activeReviews
-    .map(r => ({
-      ...r,
-      daysRemaining: getDaysRemaining(r.submissionDeadline),
-      nextMilestone: getNextMilestone(r.submissionDeadline)
-    }))
-    .filter(r => r.daysRemaining <= 60)
-    .sort((a, b) => a.daysRemaining - b.daysRemaining)
+  // Filter to future reviews only (unless showPast enabled)
+  const futureReviews = showPast
+    ? activeReviews
+    : activeReviews.filter(r => isFutureReview(r.submissionDeadline));
+
+  // Get closest milestone for each review and sort by milestone proximity
+  const urgentItems = futureReviews
+    .map(r => {
+      const closestMilestone = getClosestMilestone(r.submissionDeadline);
+      return {
+        ...r,
+        daysRemaining: getDaysRemaining(r.submissionDeadline),
+        closestMilestone,
+        milestoneDaysUntil: closestMilestone ? closestMilestone.daysUntil : 999
+      };
+    })
+    .filter(r => r.closestMilestone && r.milestoneDaysUntil <= 60) // Only items with milestones in next 60 days
+    .sort((a, b) => {
+      // Sort by closest milestone first (most urgent)
+      return a.milestoneDaysUntil - b.milestoneDaysUntil;
+    })
     .slice(0, 5);
 
   if (urgentItems.length === 0) {
@@ -19,7 +32,7 @@ export default function AlertPanel({ reviews }) {
       <div className="alert-panel">
         <h3><AlertCircle size={18} /> Action Items</h3>
         <div className="no-alerts">
-          <span>No urgent items</span>
+          <span>No urgent items - you're all caught up!</span>
         </div>
       </div>
     );
@@ -29,33 +42,45 @@ export default function AlertPanel({ reviews }) {
     <div className="alert-panel">
       <h3><AlertCircle size={18} /> Top 5 Action Items</h3>
       <div className="alert-list">
-        {urgentItems.map(item => (
-          <div key={item.id} className={`alert-item ${item.daysRemaining < 0 ? 'overdue' : item.daysRemaining <= 14 ? 'urgent' : 'warning'}`}>
-            <div className="alert-brand">
-              {item.brand === 'House of Party' ? (
-                <PartyPopper size={16} className="brand-icon party" />
-              ) : (
-                <Palette size={16} className="brand-icon craft" />
-              )}
-            </div>
-            <div className="alert-details">
-              <div className="alert-retailer">{item.retailer}</div>
-              <div className="alert-category">{item.category.substring(0, 50)}{item.category.length > 50 ? '...' : ''}</div>
-              <div className="alert-milestone">
-                {item.nextMilestone.daysUntil < 0 ? (
-                  <span className="overdue-text">{item.nextMilestone.name} was {Math.abs(item.nextMilestone.daysUntil)} days ago</span>
-                ) : item.nextMilestone.daysUntil === 0 ? (
-                  <span className="today-text">{item.nextMilestone.name} is TODAY</span>
+        {urgentItems.map(item => {
+          const milestone = item.closestMilestone;
+          const isToday = milestone.daysUntil === 0;
+          const isTomorrow = milestone.daysUntil === 1;
+          const isUrgent = milestone.daysUntil <= 7;
+
+          return (
+            <div
+              key={item.id}
+              className={`alert-item ${isToday ? 'overdue' : isUrgent ? 'urgent' : 'warning'}`}
+            >
+              <div className="alert-brand">
+                {item.brand === 'House of Party' ? (
+                  <PartyPopper size={16} className="brand-icon party" />
                 ) : (
-                  <span>{item.nextMilestone.name} in {item.nextMilestone.daysUntil} days</span>
+                  <Palette size={16} className="brand-icon craft" />
                 )}
               </div>
+              <div className="alert-details">
+                <div className="alert-retailer">{item.retailer}</div>
+                <div className="alert-category">
+                  {item.category.substring(0, 50)}{item.category.length > 50 ? '...' : ''}
+                </div>
+                <div className="alert-milestone">
+                  {isToday ? (
+                    <span className="today-text">{milestone.name} is TODAY!</span>
+                  ) : isTomorrow ? (
+                    <span className="urgent-text">{milestone.name} is TOMORROW</span>
+                  ) : (
+                    <span>{milestone.name} in {milestone.daysUntil} days</span>
+                  )}
+                </div>
+              </div>
+              <div className="alert-date">
+                {formatShortDate(item.submissionDeadline)}
+              </div>
             </div>
-            <div className="alert-date">
-              {formatShortDate(item.submissionDeadline)}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

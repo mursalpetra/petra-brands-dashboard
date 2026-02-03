@@ -137,6 +137,13 @@ body {
 .card-icon.green { background: #DCFCE7; color: #22C55E; }
 .card-icon.red { background: #FEE2E2; color: #EF4444; }
 .card-icon.purple { background: #EDE9FE; color: #8B5CF6; }
+.card-icon.teal { background: #CCFBF1; color: #14B8A6; }
+.card-icon.gray { background: #F3F4F6; color: #9CA3AF; }
+
+.summary-card.highlight {
+  border-color: #14B8A6;
+  background: #F0FDFA;
+}
 
 .card-value {
   font-size: 1.75rem;
@@ -261,6 +268,11 @@ body {
   font-weight: 700;
 }
 
+.urgent-text {
+  color: #F97316;
+  font-weight: 600;
+}
+
 .alert-date {
   font-size: 0.75rem;
   color: var(--text-secondary);
@@ -336,6 +348,49 @@ body {
   font-size: 0.875rem;
   background: white;
   cursor: pointer;
+}
+
+/* Toggle Switch */
+.toggle-group {
+  margin-left: auto;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: var(--border-color);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+  padding: 0;
+}
+
+.toggle-switch.active {
+  background: #3B82F6;
+}
+
+.toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.toggle-switch.active .toggle-knob {
+  transform: translateX(20px);
 }
 
 /* Table */

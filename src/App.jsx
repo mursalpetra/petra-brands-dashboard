@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { PartyPopper, Palette, Calendar } from 'lucide-react';
 import { reviewData } from './data/reviewData';
-import { getDaysRemaining, getStatus, CURRENT_DATE } from './utils/dateUtils';
+import { getDaysRemaining, getStatus, isFutureReview, CURRENT_DATE } from './utils/dateUtils';
 import SummaryCards from './components/SummaryCards';
 import AlertPanel from './components/AlertPanel';
 import FilterBar from './components/FilterBar';
@@ -14,16 +14,25 @@ function App() {
   const [retailerFilter, setRetailerFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [showPast, setShowPast] = useState(false); // Default: only show future reviews
 
-  // Get unique retailers for filter dropdown
+  // Get unique retailers for filter dropdown (from future reviews only, unless showPast)
   const retailers = useMemo(() => {
-    const unique = [...new Set(reviews.map(r => r.retailer))];
+    const reviewsToUse = showPast
+      ? reviews
+      : reviews.filter(r => isFutureReview(r.submissionDeadline));
+    const unique = [...new Set(reviewsToUse.map(r => r.retailer))];
     return unique.sort();
-  }, [reviews]);
+  }, [reviews, showPast]);
 
   // Filter reviews
   const filteredReviews = useMemo(() => {
     return reviews.filter(review => {
+      // FIRST: Filter to future reviews only (unless showPast is enabled)
+      if (!showPast && !isFutureReview(review.submissionDeadline)) {
+        return false;
+      }
+
       // Brand filter
       if (brandFilter !== 'All' && review.brand !== brandFilter) return false;
 
@@ -32,7 +41,7 @@ function App() {
 
       // Status filter
       if (statusFilter !== 'All') {
-        const status = getStatus(getDaysRemaining(review.submissionDeadline), review.completed);
+        const status = getStatus(getDaysRemaining(review.submissionDeadline), review.completed, showPast);
         if (status !== statusFilter) return false;
       }
 
@@ -49,7 +58,7 @@ function App() {
 
       return true;
     });
-  }, [reviews, brandFilter, retailerFilter, statusFilter, searchQuery]);
+  }, [reviews, brandFilter, retailerFilter, statusFilter, searchQuery, showPast]);
 
   const handleToggleComplete = (id) => {
     setReviews(reviews.map(r =>
@@ -84,8 +93,8 @@ function App() {
 
       <main className="main-content">
         <div className="top-section">
-          <SummaryCards reviews={reviews} />
-          <AlertPanel reviews={reviews} />
+          <SummaryCards reviews={reviews} showPast={showPast} />
+          <AlertPanel reviews={reviews} showPast={showPast} />
         </div>
 
         <FilterBar
@@ -98,11 +107,14 @@ function App() {
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           retailers={retailers}
+          showPast={showPast}
+          setShowPast={setShowPast}
         />
 
         <ReviewTable
           reviews={filteredReviews}
           onToggleComplete={handleToggleComplete}
+          showPast={showPast}
         />
       </main>
 

@@ -1,16 +1,19 @@
 import { differenceInDays, subWeeks, format, parseISO } from 'date-fns';
 
-// Current date for the dashboard (Feb 3, 2026)
-export const CURRENT_DATE = new Date('2026-02-03');
+// Use dynamic current date
+export const CURRENT_DATE = new Date();
 
 export function getDaysRemaining(deadlineStr) {
   const deadline = parseISO(deadlineStr);
   return differenceInDays(deadline, CURRENT_DATE);
 }
 
-export function getStatus(daysRemaining, completed) {
+export function getStatus(daysRemaining, completed, includePast = false) {
   if (completed) return 'COMPLETED';
-  if (daysRemaining < 0) return 'OVERDUE';
+  if (daysRemaining < 0) {
+    // Only return OVERDUE if showing past reviews
+    return includePast ? 'OVERDUE' : null;
+  }
   if (daysRemaining <= 14) return 'URGENT';
   if (daysRemaining <= 42) return 'PREP_NOW';
   if (daysRemaining <= 84) return 'ON_TRACK';
@@ -73,4 +76,44 @@ export function getNextMilestone(deadlineStr) {
   }
 
   return { name: 'Overdue', date: milestones.submissionDeadline, daysUntil: getDaysRemaining(deadlineStr) };
+}
+
+// Check if review is in the future (deadline >= today)
+export function isFutureReview(deadlineStr) {
+  return getDaysRemaining(deadlineStr) >= 0;
+}
+
+// Check if prep is starting this week (T-8 to T-6 weeks window)
+export function isStartingPrepThisWeek(deadlineStr) {
+  const milestones = calculateMilestones(deadlineStr);
+  const prepStartDays = getDaysRemaining(milestones.prepStart);
+  const briefDueDays = getDaysRemaining(milestones.internalBriefDue);
+
+  // Currently in prep start window: prep start has passed (or today) but brief not due yet
+  return prepStartDays <= 0 && briefDueDays > 0;
+}
+
+// Get the closest upcoming milestone for a review
+export function getClosestMilestone(deadlineStr) {
+  const milestones = calculateMilestones(deadlineStr);
+  const today = CURRENT_DATE;
+
+  const orderedMilestones = [
+    { name: 'Prep Start', date: milestones.prepStart },
+    { name: 'Internal Brief Due', date: milestones.internalBriefDue },
+    { name: 'Samples Ready', date: milestones.samplesReady },
+    { name: 'Assets Ready', date: milestones.assetsReady },
+    { name: 'Final Review', date: milestones.finalReview },
+    { name: 'Submission Deadline', date: milestones.submissionDeadline }
+  ];
+
+  for (const milestone of orderedMilestones) {
+    const milestoneDate = parseISO(milestone.date);
+    const daysUntil = differenceInDays(milestoneDate, today);
+    if (daysUntil >= -1) { // Include if today or in future (or just yesterday for "is TODAY" display)
+      return { ...milestone, daysUntil };
+    }
+  }
+
+  return null;
 }

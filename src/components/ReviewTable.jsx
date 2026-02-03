@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { ChevronDown, ChevronUp, ChevronRight, Check, PartyPopper, Palette } from 'lucide-react';
 import {
   getDaysRemaining,
@@ -10,6 +10,7 @@ import {
 } from '../utils/dateUtils';
 
 function StatusBadge({ status }) {
+  if (!status) return null;
   const config = getStatusConfig(status);
   return (
     <span
@@ -34,7 +35,6 @@ function BrandBadge({ brand }) {
 
 function ExpandedRow({ review }) {
   const milestones = calculateMilestones(review.submissionDeadline);
-  const daysRemaining = getDaysRemaining(review.submissionDeadline);
 
   const timelineItems = [
     { label: 'Prep Start (T-8 weeks)', date: milestones.prepStart, desc: 'Begin gathering data, pricing, assortment' },
@@ -75,10 +75,10 @@ function ExpandedRow({ review }) {
   );
 }
 
-export default function ReviewTable({ reviews, onToggleComplete }) {
+export default function ReviewTable({ reviews, onToggleComplete, showPast }) {
   const [expandedId, setExpandedId] = useState(null);
   const [sortField, setSortField] = useState('daysRemaining');
-  const [sortDir, setSortDir] = useState('asc');
+  const [sortDir, setSortDir] = useState('asc'); // Default ascending (nearest deadline first)
 
   const handleSort = (field) => {
     if (sortField === field) {
@@ -92,7 +92,7 @@ export default function ReviewTable({ reviews, onToggleComplete }) {
   const enrichedReviews = reviews.map(r => ({
     ...r,
     daysRemaining: getDaysRemaining(r.submissionDeadline),
-    status: getStatus(getDaysRemaining(r.submissionDeadline), r.completed),
+    status: getStatus(getDaysRemaining(r.submissionDeadline), r.completed, showPast),
     milestones: calculateMilestones(r.submissionDeadline)
   }));
 
@@ -153,9 +153,8 @@ export default function ReviewTable({ reviews, onToggleComplete }) {
         </thead>
         <tbody>
           {sortedReviews.map(review => (
-            <>
+            <Fragment key={review.id}>
               <tr
-                key={review.id}
                 className={`${review.completed ? 'completed-row' : ''} ${expandedId === review.id ? 'expanded' : ''}`}
               >
                 <td className="expand-cell" onClick={() => setExpandedId(expandedId === review.id ? null : review.id)}>
@@ -186,7 +185,7 @@ export default function ReviewTable({ reviews, onToggleComplete }) {
                 </td>
               </tr>
               {expandedId === review.id && <ExpandedRow review={review} />}
-            </>
+            </Fragment>
           ))}
         </tbody>
       </table>

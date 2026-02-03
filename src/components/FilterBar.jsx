@@ -1,4 +1,4 @@
-import { Search, Filter } from 'lucide-react';
+import { Search, History } from 'lucide-react';
 
 export default function FilterBar({
   brandFilter,
@@ -9,7 +9,9 @@ export default function FilterBar({
   setStatusFilter,
   searchQuery,
   setSearchQuery,
-  retailers
+  retailers,
+  showPast,
+  setShowPast
 }) {
   return (
     <div className="filter-bar">
@@ -48,13 +50,27 @@ export default function FilterBar({
           <label>Status</label>
           <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
             <option value="All">All Status</option>
-            <option value="OVERDUE">Overdue</option>
+            {showPast && <option value="OVERDUE">Overdue</option>}
             <option value="URGENT">Urgent</option>
             <option value="PREP_NOW">Prep Now</option>
             <option value="ON_TRACK">On Track</option>
             <option value="UPCOMING">Upcoming</option>
             <option value="COMPLETED">Completed</option>
           </select>
+        </div>
+
+        <div className="filter-group toggle-group">
+          <label className="toggle-label">
+            <History size={14} />
+            <span>Include Past</span>
+          </label>
+          <button
+            className={`toggle-switch ${showPast ? 'active' : ''}`}
+            onClick={() => setShowPast(!showPast)}
+            aria-label="Toggle past reviews"
+          >
+            <span className="toggle-knob" />
+          </button>
         </div>
       </div>
     </div>
