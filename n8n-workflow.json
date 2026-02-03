@@ -1,0 +1,198 @@
+{
+  "name": "Petra Brands - Category Review Deadline Alerts",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 24,
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Daily 8am Check",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "url": "https://mursalpetra.github.io/petra-brands-dashboard/api/alerts.json",
+        "options": {}
+      },
+      "id": "fetch-alerts",
+      "name": "Fetch Alerts",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [220, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process alerts and create notification messages\nconst data = $input.first().json;\nconst alerts = data.alerts || [];\n\n// Filter for CRITICAL and HIGH urgency\nconst urgentAlerts = alerts.filter(a => \n  a.urgency === 'CRITICAL' || a.urgency === 'HIGH'\n);\n\n// Group by urgency\nconst critical = alerts.filter(a => a.urgency === 'CRITICAL');\nconst high = alerts.filter(a => a.urgency === 'HIGH');\nconst medium = alerts.filter(a => a.urgency === 'MEDIUM');\n\n// Format alert message\nconst formatAlert = (a) => {\n  const daysText = a.daysUntilMilestone === 0 ? 'TODAY!' : \n                   a.daysUntilMilestone === 1 ? 'TOMORROW' :\n                   `in ${a.daysUntilMilestone} days`;\n  return `• ${a.retailer} - ${a.nextMilestone} ${daysText}\\n  Category: ${a.category}\\n  Brand: ${a.brand}`;\n};\n\n// Build Slack message\nlet slackMessage = '';\nif (critical.length > 0) {\n  slackMessage += '🔴 *CRITICAL - Action Required Today*\\n';\n  slackMessage += critical.map(formatAlert).join('\\n\\n');\n  slackMessage += '\\n\\n';\n}\nif (high.length > 0) {\n  slackMessage += '🟠 *HIGH PRIORITY - Due This Week*\\n';\n  slackMessage += high.map(formatAlert).join('\\n\\n');\n  slackMessage += '\\n\\n';\n}\nif (medium.length > 0) {\n  slackMessage += '🟡 *UPCOMING - Next 7 Days*\\n';\n  slackMessage += medium.map(formatAlert).join('\\n\\n');\n}\n\nslackMessage += '\\n\\n📊 *Dashboard:* https://mursalpetra.github.io/petra-brands-dashboard/';\n\n// Build Email HTML\nlet emailHtml = `\n<h2>Category Review Deadline Alert</h2>\n<p>The following reviews need attention:</p>\n`;\n\nif (critical.length > 0) {\n  emailHtml += '<h3 style=\"color: #dc2626;\">🔴 CRITICAL - Action Required Today</h3><ul>';\n  critical.forEach(a => {\n    emailHtml += `<li><strong>${a.retailer}</strong> - ${a.nextMilestone} TODAY!<br/>\n      <small>Category: ${a.category} | Brand: ${a.brand}</small></li>`;\n  });\n  emailHtml += '</ul>';\n}\n\nif (high.length > 0) {\n  emailHtml += '<h3 style=\"color: #ea580c;\">🟠 HIGH PRIORITY - Due This Week</h3><ul>';\n  high.forEach(a => {\n    const daysText = a.daysUntilMilestone === 1 ? 'TOMORROW' : `in ${a.daysUntilMilestone} days`;\n    emailHtml += `<li><strong>${a.retailer}</strong> - ${a.nextMilestone} ${daysText}<br/>\n      <small>Category: ${a.category} | Brand: ${a.brand}</small></li>`;\n  });\n  emailHtml += '</ul>';\n}\n\nif (medium.length > 0) {\n  emailHtml += '<h3 style=\"color: #ca8a04;\">🟡 UPCOMING - Next 7 Days</h3><ul>';\n  medium.forEach(a => {\n    emailHtml += `<li><strong>${a.retailer}</strong> - ${a.nextMilestone} in ${a.daysUntilMilestone} days<br/>\n      <small>Category: ${a.category} | Brand: ${a.brand}</small></li>`;\n  });\n  emailHtml += '</ul>';\n}\n\nemailHtml += `\n<p><a href=\"https://mursalpetra.github.io/petra-brands-dashboard/\">View Full Dashboard</a></p>\n<hr/>\n<p><small>Petra Brands Category Review Tracker</small></p>\n`;\n\nreturn {\n  hasAlerts: urgentAlerts.length > 0,\n  totalAlerts: alerts.length,\n  criticalCount: critical.length,\n  highCount: high.length,\n  mediumCount: medium.length,\n  slackMessage,\n  emailHtml,\n  emailSubject: critical.length > 0 \n    ? `🚨 URGENT: ${critical.length} Category Review Deadline(s) Today!`\n    : high.length > 0\n    ? `⚠️ ${high.length} Category Review Deadline(s) This Week`\n    : `📋 ${medium.length} Upcoming Category Review Deadline(s)`,\n  alerts: urgentAlerts\n};"
+      },
+      "id": "process-alerts",
+      "name": "Process Alerts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [440, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "has-alerts",
+              "leftValue": "={{ $json.hasAlerts }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-has-alerts",
+      "name": "Has Urgent Alerts?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [660, 0]
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "#sales-ops",
+          "mode": "name"
+        },
+        "text": "={{ $json.slackMessage }}",
+        "otherOptions": {
+          "includeLinkToWorkflow": false,
+          "mrkdwn": true
+        }
+      },
+      "id": "slack-notification",
+      "name": "Send Slack Alert",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [880, -100],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_WITH_YOUR_SLACK_CREDENTIAL_ID",
+          "name": "Slack Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "alerts@petrabrands.com",
+        "toEmail": "sales-team@petrabrands.com",
+        "subject": "={{ $json.emailSubject }}",
+        "emailType": "html",
+        "html": "={{ $json.emailHtml }}",
+        "options": {}
+      },
+      "id": "email-notification",
+      "name": "Send Email Alert",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [880, 100],
+      "credentials": {
+        "smtp": {
+          "id": "REPLACE_WITH_YOUR_SMTP_CREDENTIAL_ID",
+          "name": "SMTP Account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "no-alerts",
+      "name": "No Urgent Alerts",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [880, 300]
+    }
+  ],
+  "connections": {
+    "Daily 8am Check": {
+      "main": [
+        [
+          {
+            "node": "Fetch Alerts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Alerts": {
+      "main": [
+        [
+          {
+            "node": "Process Alerts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Alerts": {
+      "main": [
+        [
+          {
+            "node": "Has Urgent Alerts?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Urgent Alerts?": {
+      "main": [
+        [
+          {
+            "node": "Send Slack Alert",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Email Alert",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Urgent Alerts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "Petra Brands"
+    },
+    {
+      "name": "Notifications"
+    }
+  ]
+}
