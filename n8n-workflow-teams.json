@@ -1,0 +1,164 @@
+{
+  "name": "Petra Brands - Category Review Deadline Alerts (Teams)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 24,
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Daily 8am Check",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "url": "https://mursalpetra.github.io/petra-brands-dashboard/api/alerts.json",
+        "options": {}
+      },
+      "id": "fetch-alerts",
+      "name": "Fetch Alerts",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [220, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process alerts and create Teams Adaptive Card\nconst data = $input.first().json;\nconst alerts = data.alerts || [];\n\n// Filter by urgency\nconst critical = alerts.filter(a => a.urgency === 'CRITICAL');\nconst high = alerts.filter(a => a.urgency === 'HIGH');\nconst medium = alerts.filter(a => a.urgency === 'MEDIUM');\nconst urgentAlerts = [...critical, ...high];\n\n// Build facts for each alert\nconst buildAlertFacts = (alertList, color) => {\n  return alertList.map(a => {\n    const daysText = a.daysUntilMilestone === 0 ? '**TODAY!**' : \n                     a.daysUntilMilestone === 1 ? '**TOMORROW**' :\n                     `in ${a.daysUntilMilestone} days`;\n    return {\n      type: 'Container',\n      style: 'emphasis',\n      items: [\n        {\n          type: 'TextBlock',\n          text: `**${a.retailer}**`,\n          weight: 'Bolder',\n          size: 'Medium'\n        },\n        {\n          type: 'FactSet',\n          facts: [\n            { title: 'Milestone', value: `${a.nextMilestone} ${daysText}` },\n            { title: 'Category', value: a.category.substring(0, 50) + (a.category.length > 50 ? '...' : '') },\n            { title: 'Brand', value: a.brand },\n            { title: 'Deadline', value: a.submissionDeadline }\n          ]\n        }\n      ],\n      separator: true\n    };\n  });\n};\n\n// Build sections\nconst sections = [];\n\nif (critical.length > 0) {\n  sections.push({\n    type: 'TextBlock',\n    text: '🔴 CRITICAL - Action Required Today',\n    weight: 'Bolder',\n    size: 'Large',\n    color: 'Attention'\n  });\n  sections.push(...buildAlertFacts(critical));\n}\n\nif (high.length > 0) {\n  sections.push({\n    type: 'TextBlock',\n    text: '🟠 HIGH PRIORITY - Due This Week',\n    weight: 'Bolder',\n    size: 'Large',\n    color: 'Warning',\n    separator: critical.length > 0\n  });\n  sections.push(...buildAlertFacts(high));\n}\n\nif (medium.length > 0) {\n  sections.push({\n    type: 'TextBlock',\n    text: '🟡 UPCOMING - Next 7 Days',\n    weight: 'Bolder',\n    size: 'Large',\n    separator: true\n  });\n  sections.push(...buildAlertFacts(medium));\n}\n\n// Build the Adaptive Card\nconst teamsCard = {\n  type: 'message',\n  attachments: [\n    {\n      contentType: 'application/vnd.microsoft.card.adaptive',\n      contentUrl: null,\n      content: {\n        '$schema': 'http://adaptivecards.io/schemas/adaptive-card.json',\n        type: 'AdaptiveCard',\n        version: '1.4',\n        body: [\n          {\n            type: 'TextBlock',\n            text: '📋 Category Review Deadline Alert',\n            weight: 'Bolder',\n            size: 'ExtraLarge'\n          },\n          {\n            type: 'TextBlock',\n            text: `${urgentAlerts.length} review(s) need attention`,\n            isSubtle: true,\n            spacing: 'None'\n          },\n          ...sections\n        ],\n        actions: [\n          {\n            type: 'Action.OpenUrl',\n            title: '📊 Open Dashboard',\n            url: 'https://mursalpetra.github.io/petra-brands-dashboard/'\n          }\n        ]\n      }\n    }\n  ]\n};\n\n// Simple text fallback for older Teams\nconst simpleMessage = `📋 **Category Review Deadline Alert**\\n\\n` +\n  (critical.length > 0 ? `🔴 **CRITICAL:** ${critical.length} deadline(s) TODAY\\n` : '') +\n  (high.length > 0 ? `🟠 **HIGH:** ${high.length} deadline(s) this week\\n` : '') +\n  (medium.length > 0 ? `🟡 **UPCOMING:** ${medium.length} deadline(s) next 7 days\\n` : '') +\n  `\\n[Open Dashboard](https://mursalpetra.github.io/petra-brands-dashboard/)`;\n\nreturn {\n  hasAlerts: urgentAlerts.length > 0,\n  totalAlerts: alerts.length,\n  criticalCount: critical.length,\n  highCount: high.length,\n  mediumCount: medium.length,\n  teamsCard,\n  simpleMessage,\n  title: critical.length > 0 \n    ? `🚨 URGENT: ${critical.length} Category Review Deadline(s) Today!`\n    : high.length > 0\n    ? `⚠️ ${high.length} Category Review Deadline(s) This Week`\n    : `📋 ${medium.length} Upcoming Category Review Deadline(s)`\n};"
+      },
+      "id": "process-alerts",
+      "name": "Process Alerts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [440, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "has-alerts",
+              "leftValue": "={{ $json.hasAlerts }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-has-alerts",
+      "name": "Has Urgent Alerts?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [660, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "YOUR_TEAMS_WEBHOOK_URL_HERE",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.teamsCard) }}",
+        "options": {}
+      },
+      "id": "teams-webhook",
+      "name": "Send Teams Alert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [880, -50]
+    },
+    {
+      "parameters": {},
+      "id": "no-alerts",
+      "name": "No Urgent Alerts",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [880, 150]
+    }
+  ],
+  "connections": {
+    "Daily 8am Check": {
+      "main": [
+        [
+          {
+            "node": "Fetch Alerts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Alerts": {
+      "main": [
+        [
+          {
+            "node": "Process Alerts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Alerts": {
+      "main": [
+        [
+          {
+            "node": "Has Urgent Alerts?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Urgent Alerts?": {
+      "main": [
+        [
+          {
+            "node": "Send Teams Alert",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Urgent Alerts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "Petra Brands"
+    },
+    {
+      "name": "Teams"
+    },
+    {
+      "name": "Notifications"
+    }
+  ]
+}
