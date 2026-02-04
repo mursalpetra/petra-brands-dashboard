@@ -1,156 +1,164 @@
-import { useState, useMemo } from 'react';
-import { PartyPopper, Palette, Calendar } from 'lucide-react';
-import { reviewData } from './data/reviewData';
-import { getDaysRemaining, getStatus, isFutureReview, CURRENT_DATE } from './utils/dateUtils';
-import SummaryCards from './components/SummaryCards';
-import AlertPanel from './components/AlertPanel';
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import { Plus } from 'lucide-react';
+import Header from './components/Header';
 import FilterBar from './components/FilterBar';
-import ReviewTable from './components/ReviewTable';
-import './App.css';
+import SummaryStats from './components/SummaryStats';
+import DesignTeamPanel from './components/DesignTeamPanel';
+import SalesTeamPanel from './components/SalesTeamPanel';
+import ImmediatePanel from './components/ImmediatePanel';
+import AddEditModal from './components/AddEditModal';
+import ArchivedModal from './components/ArchivedModal';
+import AutoArchiveToast from './components/AutoArchiveToast';
+import { useLocalStorage } from './hooks/useLocalStorage';
+import { applyFilters } from './utils/filterHelpers';
+import { isPastDeadline } from './utils/dateHelpers';
+import seedData from './data/reviewDeadlines.json';
 
 function App() {
-  const [reviews, setReviews] = useState(reviewData);
-  const [brandFilter, setBrandFilter] = useState('All');
-  const [retailerFilter, setRetailerFilter] = useState('All');
-  const [statusFilter, setStatusFilter] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [showPast, setShowPast] = useState(false); // Default: only show future reviews
-  const [showAllCategories, setShowAllCategories] = useState(false); // Default: only show relevant categories
+  // Dark mode
+  const [darkMode, setDarkMode] = useLocalStorage('petra-dark-mode', false);
 
-  // Get unique retailers for filter dropdown (from filtered reviews)
-  const retailers = useMemo(() => {
-    const reviewsToUse = reviews.filter(r => {
-      // Apply category filter
-      if (!showAllCategories && !r.categoryIncluded) return false;
-      // Apply time filter
-      if (!showPast && !isFutureReview(r.submissionDeadline)) return false;
-      return true;
-    });
-    const unique = [...new Set(reviewsToUse.map(r => r.retailer))];
-    return unique.sort();
-  }, [reviews, showPast, showAllCategories]);
+  // Data from localStorage, merged with seed data
+  const [entries, setEntries] = useLocalStorage('petra-review-deadlines', seedData);
 
-  // Filter reviews - apply category filter FIRST, then other filters
-  const filteredReviews = useMemo(() => {
-    return reviews.filter(review => {
-      // FIRST: Category filter (unless showAllCategories is enabled)
-      if (!showAllCategories && !review.categoryIncluded) {
-        return false;
-      }
-
-      // SECOND: Filter to future reviews only (unless showPast is enabled)
-      if (!showPast && !isFutureReview(review.submissionDeadline)) {
-        return false;
-      }
-
-      // Brand filter
-      if (brandFilter !== 'All' && review.brand !== brandFilter) return false;
-
-      // Retailer filter
-      if (retailerFilter !== 'All' && review.retailer !== retailerFilter) return false;
-
-      // Status filter
-      if (statusFilter !== 'All') {
-        const status = getStatus(getDaysRemaining(review.submissionDeadline), review.completed, showPast);
-        if (status !== statusFilter) return false;
-      }
-
-      // Search query
-      if (searchQuery) {
-        const query = searchQuery.toLowerCase();
-        if (
-          !review.retailer.toLowerCase().includes(query) &&
-          !review.category.toLowerCase().includes(query)
-        ) {
-          return false;
-        }
-      }
-
-      return true;
-    });
-  }, [reviews, brandFilter, retailerFilter, statusFilter, searchQuery, showPast, showAllCategories]);
-
-  // Get base filtered reviews for summary cards and alerts (category + time filtered)
-  const baseFilteredReviews = useMemo(() => {
-    return reviews.filter(review => {
-      if (!showAllCategories && !review.categoryIncluded) return false;
-      if (!showPast && !isFutureReview(review.submissionDeadline)) return false;
-      return true;
-    });
-  }, [reviews, showPast, showAllCategories]);
-
-  const handleToggleComplete = (id) => {
-    setReviews(reviews.map(r =>
-      r.id === id ? { ...r, completed: !r.completed } : r
-    ));
-  };
-
-  const formattedDate = CURRENT_DATE.toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
+  // Filters
+  const [filters, setFilters] = useState({
+    brands: [],
+    retailers: [],
+    statuses: [],
+    categories: [],
+    search: '',
   });
 
-  // Count stats for header
-  const relevantCount = reviews.filter(r => r.categoryIncluded).length;
-  const totalCount = reviews.length;
+  // Modals
+  const [editingEntry, setEditingEntry] = useState(null);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isArchivedModalOpen, setIsArchivedModalOpen] = useState(false);
+
+  // Auto-archive toast
+  const [archivedCount, setArchivedCount] = useState(0);
+  const [showArchiveToast, setShowArchiveToast] = useState(false);
+
+  // Apply dark mode class to document
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  // Auto-archive logic
+  const runAutoArchive = useCallback(() => {
+    const toArchive = entries.filter(e => !e.archived && isPastDeadline(e));
+    if (toArchive.length > 0) {
+      const updatedEntries = entries.map(e => {
+        if (toArchive.some(a => a.id === e.id)) {
+          return { ...e, archived: true };
+        }
+        return e;
+      });
+      setEntries(updatedEntries);
+      setArchivedCount(toArchive.length);
+      setShowArchiveToast(true);
+    }
+  }, [entries, setEntries]);
+
+  // Run auto-archive on mount and every hour
+  useEffect(() => {
+    runAutoArchive();
+    const interval = setInterval(runAutoArchive, 60 * 60 * 1000); // Every hour
+    return () => clearInterval(interval);
+  }, []); // Only run once on mount
+
+  // Apply filters
+  const filteredEntries = useMemo(() => {
+    return applyFilters(entries, filters);
+  }, [entries, filters]);
+
+  // Handle save from modal
+  const handleSave = (entryData) => {
+    if (editingEntry) {
+      // Update existing
+      setEntries(entries.map(e => e.id === entryData.id ? entryData : e));
+    } else {
+      // Add new
+      setEntries([...entries, entryData]);
+    }
+    setEditingEntry(null);
+    setIsAddModalOpen(false);
+  };
+
+  // Handle card click (open edit modal)
+  const handleCardClick = (entry) => {
+    setEditingEntry(entry);
+    setIsAddModalOpen(true);
+  };
+
+  // Handle add button click
+  const handleAddClick = () => {
+    setEditingEntry(null);
+    setIsAddModalOpen(true);
+  };
 
   return (
-    <div className="app">
-      <header className="header">
-        <div className="header-left">
-          <h1>Petra Brands — Category Review Tracker</h1>
-          <div className="brand-labels">
-            <span className="brand-label party"><PartyPopper size={16} /> House of Party</span>
-            <span className="brand-label craft"><Palette size={16} /> Craft Hero</span>
-          </div>
-        </div>
-        <div className="header-right">
-          <div className="current-date">
-            <Calendar size={18} />
-            <span>{formattedDate}</span>
-          </div>
-          {!showAllCategories && (
-            <div className="filter-indicator">
-              Showing {relevantCount} of {totalCount} categories
-            </div>
-          )}
-        </div>
-      </header>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
+      <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+      <FilterBar filters={filters} setFilters={setFilters} />
+      <SummaryStats entries={filteredEntries} />
 
-      <main className="main-content">
-        <div className="top-section">
-          <SummaryCards reviews={baseFilteredReviews} showPast={showPast} />
-          <AlertPanel reviews={baseFilteredReviews} showPast={showPast} />
+      {/* Main Panels */}
+      <main className="px-6 py-4 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <DesignTeamPanel entries={filteredEntries} onCardClick={handleCardClick} />
+          <SalesTeamPanel entries={filteredEntries} onCardClick={handleCardClick} />
+          <ImmediatePanel entries={filteredEntries} onCardClick={handleCardClick} />
         </div>
-
-        <FilterBar
-          brandFilter={brandFilter}
-          setBrandFilter={setBrandFilter}
-          retailerFilter={retailerFilter}
-          setRetailerFilter={setRetailerFilter}
-          statusFilter={statusFilter}
-          setStatusFilter={setStatusFilter}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          retailers={retailers}
-          showPast={showPast}
-          setShowPast={setShowPast}
-          showAllCategories={showAllCategories}
-          setShowAllCategories={setShowAllCategories}
-        />
-
-        <ReviewTable
-          reviews={filteredReviews}
-          onToggleComplete={handleToggleComplete}
-          showPast={showPast}
-        />
       </main>
 
-      <footer className="footer">
-        <p>Petra Brands Sales Operations Dashboard — Seasonal Party & Craft Categories</p>
+      {/* Footer */}
+      <footer className="mt-8 py-4 text-center text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700">
+        <p>Last updated: {new Date().toLocaleDateString()}</p>
+        <p>Petra Brands &copy; 2025</p>
       </footer>
+
+      {/* Floating Add Button */}
+      <button
+        onClick={handleAddClick}
+        className="fixed bottom-6 right-6 w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg flex items-center justify-center transition-colors z-40"
+        aria-label="Add new deadline"
+      >
+        <Plus size={24} />
+      </button>
+
+      {/* Modals */}
+      <AddEditModal
+        isOpen={isAddModalOpen}
+        onClose={() => {
+          setIsAddModalOpen(false);
+          setEditingEntry(null);
+        }}
+        onSave={handleSave}
+        entry={editingEntry}
+      />
+
+      <ArchivedModal
+        isOpen={isArchivedModalOpen}
+        onClose={() => setIsArchivedModalOpen(false)}
+        entries={entries}
+      />
+
+      {/* Auto-Archive Toast */}
+      {showArchiveToast && (
+        <AutoArchiveToast
+          count={archivedCount}
+          onViewArchived={() => {
+            setShowArchiveToast(false);
+            setIsArchivedModalOpen(true);
+          }}
+          onDismiss={() => setShowArchiveToast(false)}
+        />
+      )}
     </div>
   );
 }
