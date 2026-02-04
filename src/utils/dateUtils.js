@@ -35,11 +35,13 @@ export function getStatusConfig(status) {
 export function calculateMilestones(deadlineStr) {
   const deadline = parseISO(deadlineStr);
   const finalReviewDate = subWeeks(deadline, 1); // T-1 week
+  const samplesReadyDate = subDays(finalReviewDate, 15); // T-15 days from Final Review
   return {
     prepStart: format(subWeeks(deadline, 5), 'yyyy-MM-dd'),        // T-5 weeks
     pitchDue: format(subWeeks(deadline, 4), 'yyyy-MM-dd'),         // T-4 weeks
-    samplesReady: format(subDays(finalReviewDate, 15), 'yyyy-MM-dd'), // T-15 days from Final Review
-    sampleShip: format(subDays(finalReviewDate, 7), 'yyyy-MM-dd'),    // T-7 days from Final Review
+    designDue: format(subDays(samplesReadyDate, 14), 'yyyy-MM-dd'), // 2 weeks before Samples Ready
+    samplesReady: format(samplesReadyDate, 'yyyy-MM-dd'),          // T-15 days from Final Review
+    sampleShip: format(subDays(finalReviewDate, 7), 'yyyy-MM-dd'), // T-7 days from Final Review
     finalReview: format(finalReviewDate, 'yyyy-MM-dd'),            // T-1 week
     submissionDeadline: deadlineStr
   };
@@ -62,6 +64,7 @@ export function getNextMilestone(deadlineStr) {
   const orderedMilestones = [
     { name: 'Prep Start', date: milestones.prepStart },
     { name: 'Pitch Due', date: milestones.pitchDue },
+    { name: 'Design Due', date: milestones.designDue },
     { name: 'Samples Ready', date: milestones.samplesReady },
     { name: 'Sample Ship', date: milestones.sampleShip },
     { name: 'Final Review', date: milestones.finalReview },
@@ -102,6 +105,7 @@ export function getClosestMilestone(deadlineStr) {
   const orderedMilestones = [
     { name: 'Prep Start', date: milestones.prepStart },
     { name: 'Pitch Due', date: milestones.pitchDue },
+    { name: 'Design Due', date: milestones.designDue },
     { name: 'Samples Ready', date: milestones.samplesReady },
     { name: 'Sample Ship', date: milestones.sampleShip },
     { name: 'Final Review', date: milestones.finalReview },

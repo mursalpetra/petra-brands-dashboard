@@ -39,6 +39,7 @@ function ExpandedRow({ review }) {
   const timelineItems = [
     { label: 'Prep Start (T-5 weeks)', date: milestones.prepStart, desc: 'Begin gathering data, pricing, assortment' },
     { label: 'Pitch Due (T-4 weeks)', date: milestones.pitchDue, desc: 'Category story, deck, product selection finalized' },
+    { label: 'Design Due (2 wks before Samples)', date: milestones.designDue, desc: 'Product design finalized for sampling' },
     { label: 'Samples Ready (T-15 days from Final)', date: milestones.samplesReady, desc: 'Samples prepared and ready' },
     { label: 'Sample Ship (T-7 days from Final)', date: milestones.sampleShip, desc: 'Samples shipped to retailer' },
     { label: 'Final Review (T-1 week)', date: milestones.finalReview, desc: 'Leadership reviews before submission' },
@@ -47,7 +48,7 @@ function ExpandedRow({ review }) {
 
   return (
     <tr className="expanded-row">
-      <td colSpan="16">
+      <td colSpan="17">
         <div className="timeline-container">
           <h4>Prep Timeline for {review.retailer}</h4>
           <div className="timeline">
@@ -146,6 +147,7 @@ export default function ReviewTable({ reviews, onToggleComplete, showPast }) {
             <th>Days Left</th>
             <th>Prep Start</th>
             <th>Pitch Due</th>
+            <th>Design Due</th>
             <th>Samples Ready</th>
             <th>Sample Ship</th>
             <th>Final Review</th>
@@ -180,6 +182,7 @@ export default function ReviewTable({ reviews, onToggleComplete, showPast }) {
                 </td>
                 <td>{formatShortDate(review.milestones.prepStart)}</td>
                 <td>{formatShortDate(review.milestones.pitchDue)}</td>
+                <td>{formatShortDate(review.milestones.designDue)}</td>
                 <td>{formatShortDate(review.milestones.samplesReady)}</td>
                 <td>{formatShortDate(review.milestones.sampleShip)}</td>
                 <td>{formatShortDate(review.milestones.finalReview)}</td>
