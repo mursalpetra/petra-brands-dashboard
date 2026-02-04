@@ -24,6 +24,27 @@ const rawData = [
   { retailer: "TJX Canada (HomeSense/Marshalls/Winners)", categories: "Halloween/Fall Party & Celebrations", deadline: "2026-03-01", resetDate: "2026-10-01", reviewType: "Seasonal Buy", notes: "Est. 7-month lead - pitch window Jan-Apr", source: "TJX (Estimated)" },
   { retailer: "TJX Canada (HomeSense/Marshalls/Winners)", categories: "Holiday/Christmas Party & Celebrations", deadline: "2026-04-15", resetDate: "2026-11-01", reviewType: "Seasonal Buy", notes: "Est. 7-month lead - pitch window Feb-May", source: "TJX (Estimated)" },
 
+  // ========== KROGER 2026 SEASONAL ==========
+  // Key dates: IMFs & Quotes Due = submission deadline, In Store (Core) = reset date
+
+  // Z093 Post Christmas 2025 & S011 Valentine's 2026
+  { retailer: "Kroger", categories: "S011 Valentine's 2026", deadline: "2025-04-19", resetDate: "2025-12-21", reviewType: "Seasonal", notes: "Buyer Review 1/31/25, Lockout 6/7/25, Holiday 2/14/26", source: "Kroger Seasonal" },
+
+  // S021 Easter & S032 Early Spring Summer 2026
+  { retailer: "Kroger", categories: "S021 Easter & S032 Early Spring/Summer 2026", deadline: "2025-06-14", resetDate: "2026-02-15", reviewType: "Seasonal", notes: "Buyer Review 3/28/25, Lockout 8/2/25, Holiday 4/5/26", source: "Kroger Seasonal" },
+
+  // S031 Spring Summer Core 2026
+  { retailer: "Kroger", categories: "S031 Spring/Summer Core 2026", deadline: "2025-08-06", resetDate: "2026-04-05", reviewType: "Seasonal", notes: "Buyer Review 5/20/25, Lockout 9/24/25, Holiday 7/4/26", source: "Kroger Seasonal" },
+
+  // S051 BTS 2026
+  { retailer: "Kroger", categories: "S051 Back to School 2026", deadline: "2025-10-18", resetDate: "2026-06-21", reviewType: "Seasonal", notes: "Buyer Review 8/1/25, Lockout 12/6/25, Holiday 9/8/26", source: "Kroger Seasonal" },
+
+  // S076 Halloween 2026
+  { retailer: "Kroger", categories: "S076 Halloween 2026", deadline: "2025-12-20", resetDate: "2026-08-23", reviewType: "Seasonal", notes: "Buyer Review 10/3/25, Lockout 2/7/26, Holiday 10/31/26", source: "Kroger Seasonal" },
+
+  // S086-S088-S089 Christmas 2026
+  { retailer: "Kroger", categories: "S086-S089 Christmas 2026", deadline: "2026-02-14", resetDate: "2026-10-18", reviewType: "Seasonal", notes: "Buyer Review 11/28/25, Lockout 4/4/26, Holiday 12/25/26", source: "Kroger Seasonal" },
+
   // ========== TARGET D53 CELEBRATIONS ==========
   // 2026 Cycles - Using Vendor Confirmation as deadline, Set Date as reset
   // Note: DVS vs Instore TBD - marked as Holistic for now
