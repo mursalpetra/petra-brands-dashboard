@@ -15,24 +15,16 @@ if (!existsSync(publicDir)) {
 
 // Raw review data (same as in src/data/reviewData.js)
 const rawData = [
+  // Future reviews (2026)
   { retailer: "Food City HQ", categories: "Office/School Supplies, Cards, Stationery and Gift", deadline: "2026-07-17", reviewType: "Minor" },
   { retailer: "Food City HQ", categories: "Office/School Supplies, Cards, Stationery and Gift", deadline: "2026-07-17", reviewType: "Speed to Shelf" },
   { retailer: "Food City HQ", categories: "Misc. Outdoors, General Merchandise - Summer, General Merchandise - Spring", deadline: "2026-07-17", reviewType: "Major" },
   { retailer: "Albertsons HQ", categories: "Misc. Outdoors, General Merchandise - Summer", deadline: "2026-05-22", reviewType: "Reset" },
-  { retailer: "Food City HQ", categories: "Misc. Outdoors, Paper Products, Wraps, Garbage Bags", deadline: "2026-05-15", reviewType: "Minor" },
-  { retailer: "Ahold Delhaize: Giant Food HQ", categories: "Misc. Outdoors", deadline: "2026-04-27", reviewType: "Full Review" },
-  { retailer: "Raley's HQ", categories: "Misc. Outdoors, Film/Electronics", deadline: "2026-04-17", reviewType: "Reset" },
-  { retailer: "Food City HQ", categories: "Misc. Outdoors", deadline: "2026-04-10", reviewType: "Major" },
-  { retailer: "Ahold Delhaize: Hannaford HQ", categories: "Misc. Outdoors", deadline: "2026-04-06", reviewType: "Reset" },
   { retailer: "Raley's HQ", categories: "Office/School Supplies, Cards, Stationery and Gift", deadline: "2026-04-03", reviewType: "Reset" },
   { retailer: "Harmons HQ", categories: "Office/School Supplies, Cards, Stationery and Gift", deadline: "2026-03-12", reviewType: "" },
-  { retailer: "Kroger: Harris Teeter HQ", categories: "Misc. Outdoors, Household Hardware", deadline: "2026-02-25", reviewType: "" },
-  { retailer: "Raley's HQ", categories: "Misc. Outdoors", deadline: "2026-02-20", reviewType: "Refresh" },
   { retailer: "Publix Super Markets HQ", categories: "Office/School Supplies, Cards, Stationery and Gift", deadline: "2026-02-13", reviewType: "Major" },
-  { retailer: "Mother's Market HQ", categories: "House & Kitchenware, Misc. Household, Misc. Outdoors", deadline: "2026-02-13", reviewType: "Full Review" },
   { retailer: "Food City HQ", categories: "Office/School Supplies, Cards, Stationery and Gift", deadline: "2026-02-13", reviewType: "Major" },
-  { retailer: "Food City HQ", categories: "Misc. Outdoors", deadline: "2026-02-13", reviewType: "Minor" },
-  { retailer: "Raley's HQ", categories: "Misc. Outdoors", deadline: "2026-02-06", reviewType: "Reset" },
+  { retailer: "Food City HQ", categories: "Office/School Supplies, Cards, Stationery and Gift", deadline: "2026-02-13", reviewType: "Major" },
 ];
 
 // Category keywords for brand assignment
