@@ -37,17 +37,17 @@ function ExpandedRow({ review }) {
   const milestones = calculateMilestones(review.submissionDeadline);
 
   const timelineItems = [
-    { label: 'Prep Start (T-8 weeks)', date: milestones.prepStart, desc: 'Begin gathering data, pricing, assortment' },
-    { label: 'Internal Brief Due (T-6 weeks)', date: milestones.internalBriefDue, desc: 'Category story, deck, product selection finalized' },
-    { label: 'Samples Ready (T-4 weeks)', date: milestones.samplesReady, desc: 'Samples shipped or staged' },
-    { label: 'Assets Ready (T-3 weeks)', date: milestones.assetsReady, desc: 'All submission materials done' },
+    { label: 'Prep Start (T-5 weeks)', date: milestones.prepStart, desc: 'Begin gathering data, pricing, assortment' },
+    { label: 'Pitch Due (T-4 weeks)', date: milestones.pitchDue, desc: 'Category story, deck, product selection finalized' },
+    { label: 'Samples Ready (T-15 days from Final)', date: milestones.samplesReady, desc: 'Samples prepared and ready' },
+    { label: 'Sample Ship (T-7 days from Final)', date: milestones.sampleShip, desc: 'Samples shipped to retailer' },
     { label: 'Final Review (T-1 week)', date: milestones.finalReview, desc: 'Leadership reviews before submission' },
     { label: 'Submission Deadline', date: milestones.submissionDeadline, desc: 'Everything submitted to retailer' }
   ];
 
   return (
     <tr className="expanded-row">
-      <td colSpan="14">
+      <td colSpan="15">
         <div className="timeline-container">
           <h4>Prep Timeline for {review.retailer}</h4>
           <div className="timeline">
@@ -144,8 +144,9 @@ export default function ReviewTable({ reviews, onToggleComplete, showPast }) {
             <SortHeader field="deadline">Deadline</SortHeader>
             <th>Days Left</th>
             <th>Prep Start</th>
-            <th>Brief Due</th>
-            <th>Assets Ready</th>
+            <th>Pitch Due</th>
+            <th>Samples Ready</th>
+            <th>Sample Ship</th>
             <th>Final Review</th>
             <th>Review Type</th>
             <th>Notes</th>
@@ -172,8 +173,9 @@ export default function ReviewTable({ reviews, onToggleComplete, showPast }) {
                   {review.daysRemaining}
                 </td>
                 <td>{formatShortDate(review.milestones.prepStart)}</td>
-                <td>{formatShortDate(review.milestones.internalBriefDue)}</td>
-                <td>{formatShortDate(review.milestones.assetsReady)}</td>
+                <td>{formatShortDate(review.milestones.pitchDue)}</td>
+                <td>{formatShortDate(review.milestones.samplesReady)}</td>
+                <td>{formatShortDate(review.milestones.sampleShip)}</td>
                 <td>{formatShortDate(review.milestones.finalReview)}</td>
                 <td>{review.reviewType}</td>
                 <td className="notes-cell">

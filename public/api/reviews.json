@@ -1,5 +1,5 @@
 {
-  "generated": "2026-02-04T02:54:58.077Z",
+  "generated": "2026-02-04T03:46:08.907Z",
   "count": 9,
   "reviews": [
     {
@@ -11,10 +11,10 @@
       "reviewType": "Major",
       "daysRemaining": 10,
       "milestones": {
-        "prepStart": "2025-12-19",
-        "internalBriefDue": "2026-01-02",
-        "samplesReady": "2026-01-16",
-        "assetsReady": "2026-01-23",
+        "prepStart": "2026-01-09",
+        "pitchDue": "2026-01-16",
+        "samplesReady": "2026-01-22",
+        "sampleShip": "2026-01-30",
         "finalReview": "2026-02-06",
         "submissionDeadline": "2026-02-13"
       },
@@ -29,10 +29,10 @@
       "reviewType": "Major",
       "daysRemaining": 10,
       "milestones": {
-        "prepStart": "2025-12-19",
-        "internalBriefDue": "2026-01-02",
-        "samplesReady": "2026-01-16",
-        "assetsReady": "2026-01-23",
+        "prepStart": "2026-01-09",
+        "pitchDue": "2026-01-16",
+        "samplesReady": "2026-01-22",
+        "sampleShip": "2026-01-30",
         "finalReview": "2026-02-06",
         "submissionDeadline": "2026-02-13"
       },
@@ -47,10 +47,10 @@
       "reviewType": "Major",
       "daysRemaining": 10,
       "milestones": {
-        "prepStart": "2025-12-19",
-        "internalBriefDue": "2026-01-02",
-        "samplesReady": "2026-01-16",
-        "assetsReady": "2026-01-23",
+        "prepStart": "2026-01-09",
+        "pitchDue": "2026-01-16",
+        "samplesReady": "2026-01-22",
+        "sampleShip": "2026-01-30",
         "finalReview": "2026-02-06",
         "submissionDeadline": "2026-02-13"
       },
@@ -65,10 +65,10 @@
       "reviewType": "Standard",
       "daysRemaining": 37,
       "milestones": {
-        "prepStart": "2026-01-15",
-        "internalBriefDue": "2026-01-29",
-        "samplesReady": "2026-02-12",
-        "assetsReady": "2026-02-19",
+        "prepStart": "2026-02-05",
+        "pitchDue": "2026-02-12",
+        "samplesReady": "2026-02-18",
+        "sampleShip": "2026-02-26",
         "finalReview": "2026-03-05",
         "submissionDeadline": "2026-03-12"
       },
@@ -83,10 +83,10 @@
       "reviewType": "Reset",
       "daysRemaining": 59,
       "milestones": {
-        "prepStart": "2026-02-06",
-        "internalBriefDue": "2026-02-20",
-        "samplesReady": "2026-03-06",
-        "assetsReady": "2026-03-13",
+        "prepStart": "2026-02-27",
+        "pitchDue": "2026-03-06",
+        "samplesReady": "2026-03-12",
+        "sampleShip": "2026-03-20",
         "finalReview": "2026-03-27",
         "submissionDeadline": "2026-04-03"
       },
@@ -101,10 +101,10 @@
       "reviewType": "Reset",
       "daysRemaining": 108,
       "milestones": {
-        "prepStart": "2026-03-27",
-        "internalBriefDue": "2026-04-10",
-        "samplesReady": "2026-04-24",
-        "assetsReady": "2026-05-01",
+        "prepStart": "2026-04-17",
+        "pitchDue": "2026-04-24",
+        "samplesReady": "2026-04-30",
+        "sampleShip": "2026-05-08",
         "finalReview": "2026-05-15",
         "submissionDeadline": "2026-05-22"
       },
@@ -119,10 +119,10 @@
       "reviewType": "Minor",
       "daysRemaining": 164,
       "milestones": {
-        "prepStart": "2026-05-22",
-        "internalBriefDue": "2026-06-05",
-        "samplesReady": "2026-06-19",
-        "assetsReady": "2026-06-26",
+        "prepStart": "2026-06-12",
+        "pitchDue": "2026-06-19",
+        "samplesReady": "2026-06-25",
+        "sampleShip": "2026-07-03",
         "finalReview": "2026-07-10",
         "submissionDeadline": "2026-07-17"
       },
@@ -137,10 +137,10 @@
       "reviewType": "Speed to Shelf",
       "daysRemaining": 164,
       "milestones": {
-        "prepStart": "2026-05-22",
-        "internalBriefDue": "2026-06-05",
-        "samplesReady": "2026-06-19",
-        "assetsReady": "2026-06-26",
+        "prepStart": "2026-06-12",
+        "pitchDue": "2026-06-19",
+        "samplesReady": "2026-06-25",
+        "sampleShip": "2026-07-03",
         "finalReview": "2026-07-10",
         "submissionDeadline": "2026-07-17"
       },
@@ -155,10 +155,10 @@
       "reviewType": "Major",
       "daysRemaining": 164,
       "milestones": {
-        "prepStart": "2026-05-22",
-        "internalBriefDue": "2026-06-05",
-        "samplesReady": "2026-06-19",
-        "assetsReady": "2026-06-26",
+        "prepStart": "2026-06-12",
+        "pitchDue": "2026-06-19",
+        "samplesReady": "2026-06-25",
+        "sampleShip": "2026-07-03",
         "finalReview": "2026-07-10",
         "submissionDeadline": "2026-07-17"
       },

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-02-04T02:54:58.078Z",
+  "generated": "2026-02-04T03:46:08.907Z",
   "count": 3,
   "alerts": [
     {
@@ -11,10 +11,10 @@
       "reviewType": "Major",
       "daysRemaining": 10,
       "milestones": {
-        "prepStart": "2025-12-19",
-        "internalBriefDue": "2026-01-02",
-        "samplesReady": "2026-01-16",
-        "assetsReady": "2026-01-23",
+        "prepStart": "2026-01-09",
+        "pitchDue": "2026-01-16",
+        "samplesReady": "2026-01-22",
+        "sampleShip": "2026-01-30",
         "finalReview": "2026-02-06",
         "submissionDeadline": "2026-02-13"
       },
@@ -33,10 +33,10 @@
       "reviewType": "Major",
       "daysRemaining": 10,
       "milestones": {
-        "prepStart": "2025-12-19",
-        "internalBriefDue": "2026-01-02",
-        "samplesReady": "2026-01-16",
-        "assetsReady": "2026-01-23",
+        "prepStart": "2026-01-09",
+        "pitchDue": "2026-01-16",
+        "samplesReady": "2026-01-22",
+        "sampleShip": "2026-01-30",
         "finalReview": "2026-02-06",
         "submissionDeadline": "2026-02-13"
       },
@@ -55,10 +55,10 @@
       "reviewType": "Major",
       "daysRemaining": 10,
       "milestones": {
-        "prepStart": "2025-12-19",
-        "internalBriefDue": "2026-01-02",
-        "samplesReady": "2026-01-16",
-        "assetsReady": "2026-01-23",
+        "prepStart": "2026-01-09",
+        "pitchDue": "2026-01-16",
+        "samplesReady": "2026-01-22",
+        "sampleShip": "2026-01-30",
         "finalReview": "2026-02-06",
         "submissionDeadline": "2026-02-13"
       },

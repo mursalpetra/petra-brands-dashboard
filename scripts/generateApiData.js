@@ -50,12 +50,13 @@ function getDaysRemaining(deadline) {
 
 function calculateMilestones(deadline) {
   const d = new Date(deadline);
+  const finalReviewDate = new Date(d.getTime() - 7 * 24 * 60 * 60 * 1000); // T-1 week
   return {
-    prepStart: new Date(d.getTime() - 56 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-    internalBriefDue: new Date(d.getTime() - 42 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-    samplesReady: new Date(d.getTime() - 28 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-    assetsReady: new Date(d.getTime() - 21 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-    finalReview: new Date(d.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    prepStart: new Date(d.getTime() - 35 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],     // T-5 weeks
+    pitchDue: new Date(d.getTime() - 28 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],      // T-4 weeks
+    samplesReady: new Date(finalReviewDate.getTime() - 15 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // T-15 days from Final
+    sampleShip: new Date(finalReviewDate.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],    // T-7 days from Final
+    finalReview: finalReviewDate.toISOString().split('T')[0],                                    // T-1 week
     submissionDeadline: deadline
   };
 }
@@ -105,9 +106,9 @@ const alerts = reviews
     const today = new Date();
     const milestoneList = [
       { name: 'Prep Start', date: r.milestones.prepStart },
-      { name: 'Internal Brief Due', date: r.milestones.internalBriefDue },
+      { name: 'Pitch Due', date: r.milestones.pitchDue },
       { name: 'Samples Ready', date: r.milestones.samplesReady },
-      { name: 'Assets Ready', date: r.milestones.assetsReady },
+      { name: 'Sample Ship', date: r.milestones.sampleShip },
       { name: 'Final Review', date: r.milestones.finalReview },
       { name: 'Submission Deadline', date: r.milestones.submissionDeadline }
     ];

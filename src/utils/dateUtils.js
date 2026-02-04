@@ -1,4 +1,4 @@
-import { differenceInDays, subWeeks, format, parseISO } from 'date-fns';
+import { differenceInDays, subWeeks, subDays, format, parseISO } from 'date-fns';
 
 // Use dynamic current date
 export const CURRENT_DATE = new Date();
@@ -34,12 +34,13 @@ export function getStatusConfig(status) {
 
 export function calculateMilestones(deadlineStr) {
   const deadline = parseISO(deadlineStr);
+  const finalReviewDate = subWeeks(deadline, 1); // T-1 week
   return {
-    prepStart: format(subWeeks(deadline, 8), 'yyyy-MM-dd'),
-    internalBriefDue: format(subWeeks(deadline, 6), 'yyyy-MM-dd'),
-    samplesReady: format(subWeeks(deadline, 4), 'yyyy-MM-dd'),
-    assetsReady: format(subWeeks(deadline, 3), 'yyyy-MM-dd'),
-    finalReview: format(subWeeks(deadline, 1), 'yyyy-MM-dd'),
+    prepStart: format(subWeeks(deadline, 5), 'yyyy-MM-dd'),        // T-5 weeks
+    pitchDue: format(subWeeks(deadline, 4), 'yyyy-MM-dd'),         // T-4 weeks
+    samplesReady: format(subDays(finalReviewDate, 15), 'yyyy-MM-dd'), // T-15 days from Final Review
+    sampleShip: format(subDays(finalReviewDate, 7), 'yyyy-MM-dd'),    // T-7 days from Final Review
+    finalReview: format(finalReviewDate, 'yyyy-MM-dd'),            // T-1 week
     submissionDeadline: deadlineStr
   };
 }
@@ -60,9 +61,9 @@ export function getNextMilestone(deadlineStr) {
 
   const orderedMilestones = [
     { name: 'Prep Start', date: milestones.prepStart },
-    { name: 'Internal Brief Due', date: milestones.internalBriefDue },
+    { name: 'Pitch Due', date: milestones.pitchDue },
     { name: 'Samples Ready', date: milestones.samplesReady },
-    { name: 'Assets Ready', date: milestones.assetsReady },
+    { name: 'Sample Ship', date: milestones.sampleShip },
     { name: 'Final Review', date: milestones.finalReview },
     { name: 'Submission Deadline', date: milestones.submissionDeadline }
   ];
@@ -83,14 +84,14 @@ export function isFutureReview(deadlineStr) {
   return getDaysRemaining(deadlineStr) >= 0;
 }
 
-// Check if prep is starting this week (T-8 to T-6 weeks window)
+// Check if prep is starting this week (T-5 to T-4 weeks window)
 export function isStartingPrepThisWeek(deadlineStr) {
   const milestones = calculateMilestones(deadlineStr);
   const prepStartDays = getDaysRemaining(milestones.prepStart);
-  const briefDueDays = getDaysRemaining(milestones.internalBriefDue);
+  const pitchDueDays = getDaysRemaining(milestones.pitchDue);
 
-  // Currently in prep start window: prep start has passed (or today) but brief not due yet
-  return prepStartDays <= 0 && briefDueDays > 0;
+  // Currently in prep start window: prep start has passed (or today) but pitch not due yet
+  return prepStartDays <= 0 && pitchDueDays > 0;
 }
 
 // Get the closest upcoming milestone for a review
@@ -100,9 +101,9 @@ export function getClosestMilestone(deadlineStr) {
 
   const orderedMilestones = [
     { name: 'Prep Start', date: milestones.prepStart },
-    { name: 'Internal Brief Due', date: milestones.internalBriefDue },
+    { name: 'Pitch Due', date: milestones.pitchDue },
     { name: 'Samples Ready', date: milestones.samplesReady },
-    { name: 'Assets Ready', date: milestones.assetsReady },
+    { name: 'Sample Ship', date: milestones.sampleShip },
     { name: 'Final Review', date: milestones.finalReview },
     { name: 'Submission Deadline', date: milestones.submissionDeadline }
   ];
