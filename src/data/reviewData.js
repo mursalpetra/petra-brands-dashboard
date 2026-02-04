@@ -74,8 +74,41 @@ const rawData = [
   // Albertsons Safeway
   { retailer: "Albertsons Safeway", categories: "Gifting Candy", deadline: "2026-03-29", reviewType: "Standard", source: "StartupCPG" },
 
-  // Raley's
-  { retailer: "Raley's", categories: "Picnic Supplies", deadline: "2026-06-15", resetDate: "2026-10-06", reviewType: "Standard", source: "StartupCPG" },
+  // Raley's - Party & Picnic
+  { retailer: "Raley's", categories: "Picnic Supplies", deadline: "2026-06-15", resetDate: "2026-10-06", reviewType: "Standard", notes: "New Item - Plug & Pull Opportunity", source: "StartupCPG" },
+  { retailer: "Raley's", categories: "Lunch Box", deadline: "2026-06-29", resetDate: "2026-10-20", reviewType: "Standard", notes: "New Item - Plug & Pull Opportunity", source: "StartupCPG" },
+  { retailer: "Raley's", categories: "Premium Party", deadline: "2026-06-29", resetDate: "2026-10-20", reviewType: "Reset", notes: "Category Review (Analysis)", source: "StartupCPG" },
+  { retailer: "Raley's", categories: "Social Expr. / Party Goods", deadline: "2026-06-29", resetDate: "2026-10-20", reviewType: "Reset", notes: "Category Review (Analysis)", source: "StartupCPG" },
+  { retailer: "Raley's", categories: "Sewing & Shoe Care", deadline: "2026-08-24", resetDate: "2026-12-15", reviewType: "Reset", notes: "Category Review (Analysis)", source: "StartupCPG" },
+  { retailer: "Raley's", categories: "Sundries (Office & School)", deadline: "2026-10-05", resetDate: "2027-01-26", reviewType: "Reset", notes: "Category Review (Analysis)", source: "StartupCPG" },
+  { retailer: "Raley's", categories: "Premium Party", deadline: "2026-11-30", resetDate: "2027-03-23", reviewType: "Standard", notes: "New Item - Plug & Pull Opportunity", source: "StartupCPG" },
+  { retailer: "Raley's", categories: "Social Expr. / Party Goods", deadline: "2026-11-30", resetDate: "2027-03-23", reviewType: "Standard", notes: "New Item - Plug & Pull Opportunity", source: "StartupCPG" },
+  { retailer: "Raley's", categories: "Picnic Supplies", deadline: "2026-12-14", resetDate: "2027-04-06", reviewType: "Reset", notes: "Category Review (Analysis)", source: "StartupCPG" },
+  { retailer: "Raley's", categories: "Office & School Supplies", deadline: "2027-02-08", resetDate: "2027-06-01", reviewType: "Reset", notes: "Category Review (Analysis)", source: "StartupCPG" },
+  { retailer: "Raley's", categories: "Holiday (All Categories)", deadline: "2027-04-01", resetDate: "2027-05-04", reviewType: "Standard", notes: "New Item (holiday) - Presentations April 1st", source: "StartupCPG" },
+
+  // Sprouts - Holiday Seasonal
+  { retailer: "Sprouts", categories: "Holiday Easter", deadline: "2025-08-01", resetDate: "2026-02-09", reviewType: "Standard", source: "StartupCPG" },
+  { retailer: "Sprouts", categories: "Holiday Spring", deadline: "2025-09-01", resetDate: "2026-03-30", reviewType: "Standard", source: "StartupCPG" },
+  { retailer: "Sprouts", categories: "Holiday Summer", deadline: "2025-11-03", resetDate: "2026-05-11", reviewType: "Standard", source: "StartupCPG" },
+  { retailer: "Sprouts", categories: "Holiday Fall / Harvest / Halloween", deadline: "2026-02-01", resetDate: "2026-08-24", reviewType: "Standard", source: "StartupCPG" },
+  { retailer: "Sprouts", categories: "Holiday Item Submission - Frozen", deadline: "2026-02-01", resetDate: "2026-09-14", reviewType: "Standard", source: "StartupCPG" },
+  { retailer: "Sprouts", categories: "Holiday", deadline: "2026-04-01", resetDate: "2026-10-26", reviewType: "Standard", source: "StartupCPG" },
+
+  // Lucky's & SaveMart - Additional
+  { retailer: "Lucky's & SaveMart", categories: "Paper - Picnic", deadline: "2025-10-30", resetDate: "2026-02-27", reviewType: "Standard", crManager: "Crain", notes: "Standard Cut-In", source: "StartupCPG" },
+
+  // Publix - Earlier submissions with 2026 resets
+  { retailer: "Publix", categories: "Stationery/School Supplies", deadline: "2025-09-05", resetDate: "2026-02-20", reviewType: "Standard", crManager: "KRISTIN GRUBKA", source: "StartupCPG" },
+  { retailer: "Publix", categories: "Art/Craft", deadline: "2025-09-05", resetDate: "2026-02-20", reviewType: "Standard", crManager: "KRISTIN GRUBKA", source: "StartupCPG" },
+  { retailer: "Publix", categories: "Education/Activity", deadline: "2025-09-05", resetDate: "2026-02-20", reviewType: "Standard", crManager: "KRISTIN GRUBKA", source: "StartupCPG" },
+  { retailer: "Publix", categories: "Spring Seasonal", deadline: "2025-04-30", resetDate: "2026-04-24", reviewType: "Standard", crManager: "IVONNE LEON", source: "StartupCPG" },
+  { retailer: "Publix", categories: "Summer Seasonal", deadline: "2025-04-30", resetDate: "2026-04-24", reviewType: "Standard", crManager: "IVONNE LEON", source: "StartupCPG" },
+  { retailer: "Publix", categories: "Passover", deadline: "2025-06-19", resetDate: "2026-02-27", reviewType: "Standard", crManager: "DAN BRYAN", source: "StartupCPG" },
+  { retailer: "Publix", categories: "Fall Seasonal", deadline: "2025-10-31", resetDate: "2026-09-11", reviewType: "Standard", crManager: "DAN BRYAN", source: "StartupCPG" },
+  { retailer: "Publix", categories: "Halloween", deadline: "2025-10-31", resetDate: "2026-09-11", reviewType: "Standard", crManager: "DAN BRYAN", source: "StartupCPG" },
+  { retailer: "Publix", categories: "Christmas", deadline: "2025-10-31", resetDate: "2026-10-09", reviewType: "Standard", crManager: "DAN BRYAN", source: "StartupCPG" },
+  { retailer: "Publix", categories: "New Year", deadline: "2025-10-31", resetDate: "2026-10-09", reviewType: "Standard", crManager: "DAN BRYAN", source: "StartupCPG" },
 
   // ========== HISTORICAL DATA (Past reviews for reference) ==========
   { retailer: "Busch's HQ", categories: "Misc. Outdoors, General Merchandise - Summer, General Merchandise - Spring", deadline: "2026-01-16", reviewType: "Standard", source: "HarvestHub" },
