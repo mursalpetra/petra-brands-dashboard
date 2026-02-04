@@ -4,6 +4,26 @@
 import { categorizeReview } from '../utils/categoryUtils';
 
 const rawData = [
+  // ========== TJX GROUP (Off-Price Retail) ==========
+  // TJX buys 6-9 months out for seasonal placements
+  // Estimated deadlines based on 7-month lead time
+
+  // TJX US (TJ Maxx, HomeGoods, Marshalls)
+  { retailer: "TJX US (TJ Maxx/HomeGoods/Marshalls)", categories: "Valentine's Day Party & Celebrations", deadline: "2025-07-01", resetDate: "2026-02-01", reviewType: "Seasonal Buy", notes: "Est. 7-month lead - pitch window May-Aug", source: "TJX (Estimated)" },
+  { retailer: "TJX US (TJ Maxx/HomeGoods/Marshalls)", categories: "Easter/Spring Party & Celebrations", deadline: "2025-09-01", resetDate: "2026-04-01", reviewType: "Seasonal Buy", notes: "Est. 7-month lead - pitch window Jul-Oct", source: "TJX (Estimated)" },
+  { retailer: "TJX US (TJ Maxx/HomeGoods/Marshalls)", categories: "Summer Party & Celebrations", deadline: "2025-11-01", resetDate: "2026-06-01", reviewType: "Seasonal Buy", notes: "Est. 7-month lead - pitch window Sep-Dec", source: "TJX (Estimated)" },
+  { retailer: "TJX US (TJ Maxx/HomeGoods/Marshalls)", categories: "Back to School", deadline: "2026-01-15", resetDate: "2026-08-01", reviewType: "Seasonal Buy", notes: "Est. 7-month lead - pitch window Nov-Feb", source: "TJX (Estimated)" },
+  { retailer: "TJX US (TJ Maxx/HomeGoods/Marshalls)", categories: "Halloween/Fall Party & Celebrations", deadline: "2026-03-01", resetDate: "2026-10-01", reviewType: "Seasonal Buy", notes: "Est. 7-month lead - pitch window Jan-Apr", source: "TJX (Estimated)" },
+  { retailer: "TJX US (TJ Maxx/HomeGoods/Marshalls)", categories: "Holiday/Christmas Party & Celebrations", deadline: "2026-04-15", resetDate: "2026-11-01", reviewType: "Seasonal Buy", notes: "Est. 7-month lead - pitch window Feb-May", source: "TJX (Estimated)" },
+
+  // TJX Canada (HomeSense, Marshalls, Winners)
+  { retailer: "TJX Canada (HomeSense/Marshalls/Winners)", categories: "Valentine's Day Party & Celebrations", deadline: "2025-07-01", resetDate: "2026-02-01", reviewType: "Seasonal Buy", notes: "Est. 7-month lead - pitch window May-Aug", source: "TJX (Estimated)" },
+  { retailer: "TJX Canada (HomeSense/Marshalls/Winners)", categories: "Easter/Spring Party & Celebrations", deadline: "2025-09-01", resetDate: "2026-04-01", reviewType: "Seasonal Buy", notes: "Est. 7-month lead - pitch window Jul-Oct", source: "TJX (Estimated)" },
+  { retailer: "TJX Canada (HomeSense/Marshalls/Winners)", categories: "Summer Party & Celebrations", deadline: "2025-11-01", resetDate: "2026-06-01", reviewType: "Seasonal Buy", notes: "Est. 7-month lead - pitch window Sep-Dec", source: "TJX (Estimated)" },
+  { retailer: "TJX Canada (HomeSense/Marshalls/Winners)", categories: "Back to School", deadline: "2026-01-15", resetDate: "2026-08-01", reviewType: "Seasonal Buy", notes: "Est. 7-month lead - pitch window Nov-Feb", source: "TJX (Estimated)" },
+  { retailer: "TJX Canada (HomeSense/Marshalls/Winners)", categories: "Halloween/Fall Party & Celebrations", deadline: "2026-03-01", resetDate: "2026-10-01", reviewType: "Seasonal Buy", notes: "Est. 7-month lead - pitch window Jan-Apr", source: "TJX (Estimated)" },
+  { retailer: "TJX Canada (HomeSense/Marshalls/Winners)", categories: "Holiday/Christmas Party & Celebrations", deadline: "2026-04-15", resetDate: "2026-11-01", reviewType: "Seasonal Buy", notes: "Est. 7-month lead - pitch window Feb-May", source: "TJX (Estimated)" },
+
   // ========== TARGET D53 CELEBRATIONS ==========
   // 2026 Cycles - Using Vendor Confirmation as deadline, Set Date as reset
   // C1 - Valentine's
