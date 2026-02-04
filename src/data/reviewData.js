@@ -26,26 +26,27 @@ const rawData = [
 
   // ========== TARGET D53 CELEBRATIONS ==========
   // 2026 Cycles - Using Vendor Confirmation as deadline, Set Date as reset
+  // Note: DVS vs Instore TBD - marked as Holistic for now
   // C1 - Valentine's
-  { retailer: "Target", categories: "D53 Celebrations - Valentine's", deadline: "2025-04-20", resetDate: "2025-12-28", reviewType: "DVS", notes: "C1 2026 - Vendor Confirmation 4/20/25", source: "Target DVS" },
+  { retailer: "Target", categories: "D53 Celebrations - Valentine's", deadline: "2025-04-20", resetDate: "2025-12-28", reviewType: "Holistic", notes: "C1 2026 - Vendor Confirmation 4/20/25", source: "Target" },
   // C2 - Easter
-  { retailer: "Target", categories: "D53 Celebrations - Easter", deadline: "2025-06-15", resetDate: "2026-02-15", reviewType: "DVS", notes: "C2 2026 - Vendor Confirmation 6/15/25", source: "Target DVS" },
+  { retailer: "Target", categories: "D53 Celebrations - Easter", deadline: "2025-06-15", resetDate: "2026-02-15", reviewType: "Holistic", notes: "C2 2026 - Vendor Confirmation 6/15/25", source: "Target" },
   // C3 - Inline Party
-  { retailer: "Target", categories: "D53 Celebrations - Inline Party", deadline: "2025-07-13", resetDate: "2026-03-15", reviewType: "DVS", notes: "C3 2026 - Vendor Confirmation 7/13/25", source: "Target DVS" },
+  { retailer: "Target", categories: "D53 Celebrations - Inline Party", deadline: "2025-07-13", resetDate: "2026-03-15", reviewType: "Holistic", notes: "C3 2026 - Vendor Confirmation 7/13/25", source: "Target" },
   // C3 - Inline Bags & Wrap
-  { retailer: "Target", categories: "D53 Celebrations - Inline Bags & Wrap", deadline: "2025-07-13", resetDate: "2026-03-15", reviewType: "DVS", notes: "C3 2026 - Vendor Confirmation 7/13/25", source: "Target DVS" },
+  { retailer: "Target", categories: "D53 Celebrations - Inline Bags & Wrap", deadline: "2025-07-13", resetDate: "2026-03-15", reviewType: "Holistic", notes: "C3 2026 - Vendor Confirmation 7/13/25", source: "Target" },
   // C3 - April Endcaps (Spring, Grad, Mother's Day, Americana)
-  { retailer: "Target", categories: "D53 Celebrations - Spring/Grad/Mother's Day/Americana", deadline: "2025-08-03", resetDate: "2026-04-05", reviewType: "DVS", notes: "C3 April Endcaps 2026 - Vendor Confirmation 8/3/25", source: "Target DVS" },
+  { retailer: "Target", categories: "D53 Celebrations - Spring/Grad/Mother's Day/Americana", deadline: "2025-08-03", resetDate: "2026-04-05", reviewType: "Holistic", notes: "C3 April Endcaps 2026 - Vendor Confirmation 8/3/25", source: "Target" },
   // C3 - May Endcaps (Father's Day, Summer)
-  { retailer: "Target", categories: "D53 Celebrations - Father's Day/Summer", deadline: "2025-09-07", resetDate: "2026-05-10", reviewType: "DVS", notes: "C3 May Endcaps 2026 - Vendor Confirmation 9/7/25", source: "Target DVS" },
+  { retailer: "Target", categories: "D53 Celebrations - Father's Day/Summer", deadline: "2025-09-07", resetDate: "2026-05-10", reviewType: "Holistic", notes: "C3 May Endcaps 2026 - Vendor Confirmation 9/7/25", source: "Target" },
   // C4 - BTS Rear (Back to School)
-  { retailer: "Target", categories: "D53 Celebrations - Back to School", deadline: "2025-10-05", resetDate: "2026-06-14", reviewType: "DVS", notes: "C4 BTS Rear 2026 - Vendor Confirmation 10/5/25", source: "Target DVS" },
+  { retailer: "Target", categories: "D53 Celebrations - Back to School", deadline: "2025-10-05", resetDate: "2026-06-14", reviewType: "Holistic", notes: "C4 BTS Rear 2026 - Vendor Confirmation 10/5/25", source: "Target" },
   // C4 - Division Endcap (Summer)
-  { retailer: "Target", categories: "D53 Celebrations - Summer Division Endcap", deadline: "2025-10-05", resetDate: "2026-06-14", reviewType: "DVS", notes: "C4 Division Endcap 2026 - Vendor Confirmation 10/5/25", source: "Target DVS" },
+  { retailer: "Target", categories: "D53 Celebrations - Summer Division Endcap", deadline: "2025-10-05", resetDate: "2026-06-14", reviewType: "Holistic", notes: "C4 Division Endcap 2026 - Vendor Confirmation 10/5/25", source: "Target" },
   // C5 - Halloween, Fall, Thanksgiving
-  { retailer: "Target", categories: "D53 Celebrations - Halloween/Fall/Thanksgiving", deadline: "2025-12-14", resetDate: "2026-09-06", reviewType: "DVS", notes: "C5 2026 - Vendor Confirmation 12/14/25", source: "Target DVS" },
+  { retailer: "Target", categories: "D53 Celebrations - Halloween/Fall/Thanksgiving", deadline: "2025-12-14", resetDate: "2026-09-06", reviewType: "Holistic", notes: "C5 2026 - Vendor Confirmation 12/14/25", source: "Target" },
   // C6 - Holiday, New Year's
-  { retailer: "Target", categories: "D53 Celebrations - Holiday/New Year's", deadline: "2026-02-08", resetDate: "2026-11-01", reviewType: "DVS", notes: "C6 2026 - Vendor Confirmation 2/8/26", source: "Target DVS" },
+  { retailer: "Target", categories: "D53 Celebrations - Holiday/New Year's", deadline: "2026-02-08", resetDate: "2026-11-01", reviewType: "Holistic", notes: "C6 2026 - Vendor Confirmation 2/8/26", source: "Target" },
 
   // ========== HARVESTHUB DATA ==========
   // Future reviews (2026)
