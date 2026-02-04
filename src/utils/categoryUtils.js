@@ -6,6 +6,9 @@ const seasonalPartyKeywords = [
   'seasonal',
   'party',
   'parties',
+  'party goods',
+  'party ware',
+  'partyware',
   'celebration',
   'celebrations',
   'occasion',
@@ -29,6 +32,14 @@ const seasonalPartyKeywords = [
   'father\'s day',
   'fathers day',
   'graduation',
+  'passover',
+  'channukah',
+  'hanukkah',
+  'winter seasonal',
+  'spring seasonal',
+  'summer seasonal',
+  'fall seasonal',
+  'q4 holiday',
   'impulse',
   'endcap',
   'entertaining',
@@ -38,6 +49,10 @@ const seasonalPartyKeywords = [
   'cups',
   'napkins',
   'disposable dinnerware',
+  'disposable cups',
+  'disposable plates',
+  'picnic',
+  'picnicware',
   'decoration',
   'decorations',
   'décor',
@@ -65,6 +80,7 @@ const seasonalPartyKeywords = [
   'goodie bags',
   'birthday candle',
   'celebration candle',
+  'candles',
   'hostess',
   'serveware',
   'disposable serve',
@@ -72,9 +88,14 @@ const seasonalPartyKeywords = [
   'flowers',
   'gifts',
   'gift',
+  'gifting',
   'cards',
   'stationery and gift',
-  'greeting card'
+  'greeting card',
+  'toys',
+  'puzzles',
+  'games',
+  'acrylics'
 ];
 
 // Bucket B: Crafts / Office-Adjacent keywords
@@ -162,7 +183,7 @@ const exclusionKeywords = [
   'cookware',
   'home fragrance',
   'air freshener',
-  'candle', // General candles (not celebration candles)
+  // Removed 'candle' - now handled in party keywords
   'water',
   'sparkling',
   'seltzer',
