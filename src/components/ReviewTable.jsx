@@ -47,7 +47,7 @@ function ExpandedRow({ review }) {
 
   return (
     <tr className="expanded-row">
-      <td colSpan="15">
+      <td colSpan="16">
         <div className="timeline-container">
           <h4>Prep Timeline for {review.retailer}</h4>
           <div className="timeline">
@@ -142,6 +142,7 @@ export default function ReviewTable({ reviews, onToggleComplete, showPast }) {
             <SortHeader field="retailer">Retailer</SortHeader>
             <th>Category</th>
             <SortHeader field="deadline">Deadline</SortHeader>
+            <th>Date Type</th>
             <th>Days Left</th>
             <th>Prep Start</th>
             <th>Pitch Due</th>
@@ -169,6 +170,11 @@ export default function ReviewTable({ reviews, onToggleComplete, showPast }) {
                   {review.category.substring(0, 40)}{review.category.length > 40 ? '...' : ''}
                 </td>
                 <td>{formatShortDate(review.submissionDeadline)}</td>
+                <td>
+                  <span className={`date-type-badge ${review.dateType === 'Estimate' ? 'estimate' : 'actual'}`}>
+                    {review.dateType || 'Actual'}
+                  </span>
+                </td>
                 <td className={`days-cell ${review.daysRemaining < 0 ? 'overdue' : review.daysRemaining <= 14 ? 'urgent' : ''}`}>
                   {review.daysRemaining}
                 </td>

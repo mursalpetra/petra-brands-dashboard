@@ -191,23 +191,59 @@ const rawData = [
   { retailer: "Publix Super Markets HQ", categories: "General Merchandise - Summer", deadline: "2025-09-01", reviewType: "Major", storeCount: 1448, source: "HarvestHub" },
 ];
 
+// Helper function to convert 2025 date to 2026 equivalent
+function convertTo2026(dateStr) {
+  if (!dateStr) return null;
+  const year = parseInt(dateStr.substring(0, 4));
+  if (year < 2026) {
+    return dateStr.replace(/^(\d{4})/, '2026');
+  }
+  return dateStr;
+}
+
+// Helper function to determine if date is actual (2026+) or estimate (2025)
+function getDateType(dateStr) {
+  if (!dateStr) return 'Unknown';
+  const year = parseInt(dateStr.substring(0, 4));
+  return year >= 2026 ? 'Actual' : 'Estimate';
+}
+
 // Process and enhance the data with category filtering
 let idCounter = 1;
 export const reviewData = rawData.map(item => {
   const catResult = categorizeReview(item.categories);
+  const deadlineYear = parseInt(item.deadline.substring(0, 4));
+  const isEstimate = deadlineYear < 2026;
+
+  // Convert 2025 dates to 2026 equivalents for visibility
+  const displayDeadline = convertTo2026(item.deadline);
+  const displayResetDate = item.resetDate ? convertTo2026(item.resetDate) : null;
+
+  // Build notes - include original date if it was converted
+  let notes = item.notes || '';
+  if (isEstimate) {
+    const originalNote = `Original: ${item.deadline}`;
+    notes = notes ? `${notes} | ${originalNote}` : originalNote;
+  }
+  if (catResult.needsVerification && !notes.includes('Verify')) {
+    notes = notes ? `⚠️ Verify category | ${notes}` : '⚠️ Verify category';
+  }
 
   return {
     id: idCounter++,
     brand: catResult.brand || 'House of Party',
     retailer: item.retailer,
     category: item.categories,
-    submissionDeadline: item.deadline,
-    resetDate: item.resetDate || null,
+    submissionDeadline: displayDeadline,
+    originalDeadline: item.deadline,
+    resetDate: displayResetDate,
+    originalResetDate: item.resetDate || null,
+    dateType: isEstimate ? 'Estimate' : 'Actual',
     reviewType: item.reviewType || 'Standard',
     storeCount: item.storeCount || null,
     crManager: item.crManager || null,
     source: item.source || 'Unknown',
-    notes: catResult.needsVerification ? '⚠️ Verify category' : '',
+    notes: notes,
     completed: false,
     // Category filtering metadata
     categoryIncluded: catResult.included,

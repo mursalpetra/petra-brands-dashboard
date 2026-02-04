@@ -536,6 +536,27 @@ body {
   color: #D97706;
 }
 
+/* Date Type Badge */
+.date-type-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.date-type-badge.actual {
+  background: #DCFCE7;
+  color: #16A34A;
+}
+
+.date-type-badge.estimate {
+  background: #FEF9C3;
+  color: #CA8A04;
+}
+
 /* Cell Styles */
 .retailer-cell {
   font-weight: 500;
