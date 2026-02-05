@@ -131,7 +131,7 @@ export default function FilterBar({ filters, setFilters }) {
         />
 
         <MultiSelect
-          label="Category"
+          label="Season"
           options={CATEGORIES}
           selected={categories}
           onChange={(val) => setFilters({ ...filters, categories: val })}

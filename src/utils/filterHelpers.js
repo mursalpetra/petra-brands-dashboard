@@ -18,9 +18,9 @@ export function applyFilters(entries, filters) {
       if (!statuses.includes(entry.status)) return false;
     }
 
-    // Category filter (multi-select)
+    // Category filter (matches against seasonOrProgram for cleaner grouping)
     if (categories && categories.length > 0) {
-      if (!categories.includes(entry.category)) return false;
+      if (!categories.includes(entry.seasonOrProgram)) return false;
     }
 
     // Search filter (searches across all text fields)

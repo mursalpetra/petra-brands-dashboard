@@ -10,18 +10,33 @@ export const BRANDS = [
 
 // Retailers
 export const RETAILERS = [
-  'Target',
-  'Walmart',
-  'CVS',
-  'TJX (Marshalls/TJ Maxx/HomeGoods)',
-  'Amazon',
-  'Dollar General',
-  'Five Below',
-  'Costco',
+  'Ahold Delhaize: Giant Food HQ',
+  'Ahold Delhaize: Hannaford HQ',
+  'Ahold Delhaize: Stop & Shop HQ',
+  'Ahold Delhaize: The Giant Company HQ',
+  'Albertsons HQ',
+  'Albertsons Safeway',
+  "Basha's",
+  "Busch's HQ",
+  'Food City HQ',
+  'Good Eggs',
+  'Harmons',
+  'Harmons HQ',
   'Kroger',
+  'Kroger HQ',
+  'Kroger: Harris Teeter',
+  "Lucky's & SaveMart",
+  "Mother's Market",
+  'Nugget',
   'Publix',
-  'Albertsons',
-  'Other',
+  'Publix Super Markets HQ',
+  "Raley's",
+  "Raley's HQ",
+  'Sprouts',
+  'Target',
+  'TJX (Marshalls/TJ Maxx/HomeGoods)',
+  'TJX Canada (HomeSense/Marshalls/Winners)',
+  'WinCo Foods HQ',
 ];
 
 // Status definitions with styling
@@ -36,20 +51,16 @@ export const STATUSES = [
   { id: 'revision-needed', name: 'Revision Needed', color: '#DC2626', bgClass: 'bg-red-50', textClass: 'text-red-600' },
 ];
 
-// Categories
+// Season / Program categories (used for filtering)
 export const CATEGORIES = [
-  "Valentine's Day",
-  'Easter / Spring',
-  'Summer',
   'Back to School',
-  'Halloween',
-  'Thanksgiving / Fall',
   'Christmas / Holiday',
+  'Easter / Spring',
   'Everyday / Core',
-  'New Item Setup',
-  'Planogram Reset',
-  'Promotional / Endcap',
-  'Seasonal Transition',
+  'Halloween',
+  'Summer',
+  'Thanksgiving / Fall',
+  "Valentine's Day",
 ];
 
 // Review types
