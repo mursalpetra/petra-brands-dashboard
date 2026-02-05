@@ -1,0 +1,72 @@
+{
+  "generated": "2026-02-04T03:46:08.907Z",
+  "count": 3,
+  "alerts": [
+    {
+      "id": 7,
+      "brand": "Both",
+      "retailer": "Publix Super Markets HQ",
+      "category": "Office/School Supplies, Cards, Stationery and Gift",
+      "submissionDeadline": "2026-02-13",
+      "reviewType": "Major",
+      "daysRemaining": 10,
+      "milestones": {
+        "prepStart": "2026-01-09",
+        "pitchDue": "2026-01-16",
+        "samplesReady": "2026-01-22",
+        "sampleShip": "2026-01-30",
+        "finalReview": "2026-02-06",
+        "submissionDeadline": "2026-02-13"
+      },
+      "status": "URGENT",
+      "nextMilestone": "Final Review",
+      "nextMilestoneDate": "2026-02-06",
+      "daysUntilMilestone": 2,
+      "urgency": "HIGH"
+    },
+    {
+      "id": 8,
+      "brand": "Both",
+      "retailer": "Food City HQ",
+      "category": "Office/School Supplies, Cards, Stationery and Gift",
+      "submissionDeadline": "2026-02-13",
+      "reviewType": "Major",
+      "daysRemaining": 10,
+      "milestones": {
+        "prepStart": "2026-01-09",
+        "pitchDue": "2026-01-16",
+        "samplesReady": "2026-01-22",
+        "sampleShip": "2026-01-30",
+        "finalReview": "2026-02-06",
+        "submissionDeadline": "2026-02-13"
+      },
+      "status": "URGENT",
+      "nextMilestone": "Final Review",
+      "nextMilestoneDate": "2026-02-06",
+      "daysUntilMilestone": 2,
+      "urgency": "HIGH"
+    },
+    {
+      "id": 9,
+      "brand": "Both",
+      "retailer": "Food City HQ",
+      "category": "Office/School Supplies, Cards, Stationery and Gift",
+      "submissionDeadline": "2026-02-13",
+      "reviewType": "Major",
+      "daysRemaining": 10,
+      "milestones": {
+        "prepStart": "2026-01-09",
+        "pitchDue": "2026-01-16",
+        "samplesReady": "2026-01-22",
+        "sampleShip": "2026-01-30",
+        "finalReview": "2026-02-06",
+        "submissionDeadline": "2026-02-13"
+      },
+      "status": "URGENT",
+      "nextMilestone": "Final Review",
+      "nextMilestoneDate": "2026-02-06",
+      "daysUntilMilestone": 2,
+      "urgency": "HIGH"
+    }
+  ]
+}

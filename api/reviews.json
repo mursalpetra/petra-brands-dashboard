@@ -1,0 +1,168 @@
+{
+  "generated": "2026-02-04T03:46:08.907Z",
+  "count": 9,
+  "reviews": [
+    {
+      "id": 7,
+      "brand": "Both",
+      "retailer": "Publix Super Markets HQ",
+      "category": "Office/School Supplies, Cards, Stationery and Gift",
+      "submissionDeadline": "2026-02-13",
+      "reviewType": "Major",
+      "daysRemaining": 10,
+      "milestones": {
+        "prepStart": "2026-01-09",
+        "pitchDue": "2026-01-16",
+        "samplesReady": "2026-01-22",
+        "sampleShip": "2026-01-30",
+        "finalReview": "2026-02-06",
+        "submissionDeadline": "2026-02-13"
+      },
+      "status": "URGENT"
+    },
+    {
+      "id": 8,
+      "brand": "Both",
+      "retailer": "Food City HQ",
+      "category": "Office/School Supplies, Cards, Stationery and Gift",
+      "submissionDeadline": "2026-02-13",
+      "reviewType": "Major",
+      "daysRemaining": 10,
+      "milestones": {
+        "prepStart": "2026-01-09",
+        "pitchDue": "2026-01-16",
+        "samplesReady": "2026-01-22",
+        "sampleShip": "2026-01-30",
+        "finalReview": "2026-02-06",
+        "submissionDeadline": "2026-02-13"
+      },
+      "status": "URGENT"
+    },
+    {
+      "id": 9,
+      "brand": "Both",
+      "retailer": "Food City HQ",
+      "category": "Office/School Supplies, Cards, Stationery and Gift",
+      "submissionDeadline": "2026-02-13",
+      "reviewType": "Major",
+      "daysRemaining": 10,
+      "milestones": {
+        "prepStart": "2026-01-09",
+        "pitchDue": "2026-01-16",
+        "samplesReady": "2026-01-22",
+        "sampleShip": "2026-01-30",
+        "finalReview": "2026-02-06",
+        "submissionDeadline": "2026-02-13"
+      },
+      "status": "URGENT"
+    },
+    {
+      "id": 6,
+      "brand": "Both",
+      "retailer": "Harmons HQ",
+      "category": "Office/School Supplies, Cards, Stationery and Gift",
+      "submissionDeadline": "2026-03-12",
+      "reviewType": "Standard",
+      "daysRemaining": 37,
+      "milestones": {
+        "prepStart": "2026-02-05",
+        "pitchDue": "2026-02-12",
+        "samplesReady": "2026-02-18",
+        "sampleShip": "2026-02-26",
+        "finalReview": "2026-03-05",
+        "submissionDeadline": "2026-03-12"
+      },
+      "status": "PREP_NOW"
+    },
+    {
+      "id": 5,
+      "brand": "Both",
+      "retailer": "Raley's HQ",
+      "category": "Office/School Supplies, Cards, Stationery and Gift",
+      "submissionDeadline": "2026-04-03",
+      "reviewType": "Reset",
+      "daysRemaining": 59,
+      "milestones": {
+        "prepStart": "2026-02-27",
+        "pitchDue": "2026-03-06",
+        "samplesReady": "2026-03-12",
+        "sampleShip": "2026-03-20",
+        "finalReview": "2026-03-27",
+        "submissionDeadline": "2026-04-03"
+      },
+      "status": "ON_TRACK"
+    },
+    {
+      "id": 4,
+      "brand": "House of Party",
+      "retailer": "Albertsons HQ",
+      "category": "Misc. Outdoors, General Merchandise - Summer",
+      "submissionDeadline": "2026-05-22",
+      "reviewType": "Reset",
+      "daysRemaining": 108,
+      "milestones": {
+        "prepStart": "2026-04-17",
+        "pitchDue": "2026-04-24",
+        "samplesReady": "2026-04-30",
+        "sampleShip": "2026-05-08",
+        "finalReview": "2026-05-15",
+        "submissionDeadline": "2026-05-22"
+      },
+      "status": "UPCOMING"
+    },
+    {
+      "id": 1,
+      "brand": "Both",
+      "retailer": "Food City HQ",
+      "category": "Office/School Supplies, Cards, Stationery and Gift",
+      "submissionDeadline": "2026-07-17",
+      "reviewType": "Minor",
+      "daysRemaining": 164,
+      "milestones": {
+        "prepStart": "2026-06-12",
+        "pitchDue": "2026-06-19",
+        "samplesReady": "2026-06-25",
+        "sampleShip": "2026-07-03",
+        "finalReview": "2026-07-10",
+        "submissionDeadline": "2026-07-17"
+      },
+      "status": "UPCOMING"
+    },
+    {
+      "id": 2,
+      "brand": "Both",
+      "retailer": "Food City HQ",
+      "category": "Office/School Supplies, Cards, Stationery and Gift",
+      "submissionDeadline": "2026-07-17",
+      "reviewType": "Speed to Shelf",
+      "daysRemaining": 164,
+      "milestones": {
+        "prepStart": "2026-06-12",
+        "pitchDue": "2026-06-19",
+        "samplesReady": "2026-06-25",
+        "sampleShip": "2026-07-03",
+        "finalReview": "2026-07-10",
+        "submissionDeadline": "2026-07-17"
+      },
+      "status": "UPCOMING"
+    },
+    {
+      "id": 3,
+      "brand": "House of Party",
+      "retailer": "Food City HQ",
+      "category": "Misc. Outdoors, General Merchandise - Summer, General Merchandise - Spring",
+      "submissionDeadline": "2026-07-17",
+      "reviewType": "Major",
+      "daysRemaining": 164,
+      "milestones": {
+        "prepStart": "2026-06-12",
+        "pitchDue": "2026-06-19",
+        "samplesReady": "2026-06-25",
+        "sampleShip": "2026-07-03",
+        "finalReview": "2026-07-10",
+        "submissionDeadline": "2026-07-17"
+      },
+      "status": "UPCOMING"
+    }
+  ]
+}
